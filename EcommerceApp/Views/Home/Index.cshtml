@@ -1,8 +1,68 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <!-- Sección Principal (Hero) -->
+    <div class="p-5 mb-4 bg-dark text-white rounded-3 shadow">
+        <div class="container-fluid py-5">
+            <h1 class="display-4 fw-bold">Bienvenido a Z-Commerce</h1>
+            <p class="col-md-8 mx-auto fs-5 mt-3">
+                Tu tienda de confianza para componentes de hardware, servidores y periféricos de alto rendimiento.
+            </p>
+            <a href="#" class="btn btn-primary btn-lg mt-3 fw-bold">Explorar Catálogo</a>
+        </div>
+    </div>
+
+    <!-- Sección de Productos Destacados -->
+    <h2 class="mt-5 mb-4 fw-bold text-start">Productos Destacados</h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        <!-- Producto 1 -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="https://placehold.co/400x250/212529/FFFFFF?text=Procesador+Server-X" class="card-img-top rounded-top" alt="Procesador">
+                <div class="card-body text-start">
+                    <h5 class="card-title fw-bold">Procesador Server-X Pro</h5>
+                    <p class="card-text text-muted">Máxima potencia para bases de datos y virtualización con excelente gestión térmica.</p>
+                    <h4 class="text-primary fw-bold">$349.990</h4>
+                </div>
+                <div class="card-footer bg-white border-top-0 pb-3">
+                    <button class="btn btn-outline-dark w-100 fw-bold">Agregar al Carrito</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="https://placehold.co/400x250/212529/FFFFFF?text=Memoria+RAM+32GB" class="card-img-top rounded-top" alt="Memoria RAM">
+                <div class="card-body text-start">
+                    <h5 class="card-title fw-bold">Kit Memoria RAM 32GB</h5>
+                    <p class="card-text text-muted">Velocidad extrema y baja latencia, ideal para cargas de trabajo pesadas y gaming.</p>
+                    <h4 class="text-primary fw-bold">$129.990</h4>
+                </div>
+                <div class="card-footer bg-white border-top-0 pb-3">
+                    <button class="btn btn-outline-dark w-100 fw-bold">Agregar al Carrito</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Producto 3 -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="https://placehold.co/400x250/212529/FFFFFF?text=Pasta+Termica" class="card-img-top rounded-top" alt="Pasta Térmica">
+                <div class="card-body text-start">
+                    <h5 class="card-title fw-bold">Compuesto Térmico Pro-Cool</h5>
+                    <p class="card-text text-muted">Conductividad superior para mantener tu hardware al máximo rendimiento sin sobrecalentamiento.</p>
+                    <h4 class="text-primary fw-bold">$14.990</h4>
+                </div>
+                <div class="card-footer bg-white border-top-0 pb-3">
+                    <button class="btn btn-outline-dark w-100 fw-bold">Agregar al Carrito</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
