@@ -8,6 +8,14 @@
 <div class="container py-5 text-start">
     <h2 class="fw-black mb-4"><i class="fa-solid fa-credit-card text-primary me-2"></i>Finalizar Compra</h2>
 
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger border-0 rounded-4 shadow-sm mb-4">
+            <h6 class="fw-bold mb-1"><i class="fa-solid fa-triangle-exclamation me-2"></i>Sistema de Seguridad:</h6>
+            <div asp-validation-summary="All" class="mb-0 small"></div>
+        </div>
+    }
+
     <form asp-action="Index" method="post" class="row g-4">
         <div class="col-lg-7">
             <div class="card shadow-sm border rounded-4 p-4 bg-white">
@@ -59,33 +67,59 @@
         </div>
 
         <div class="col-lg-5">
-            <div class="card shadow-sm border rounded-4 p-4 bg-dark text-white sticky-top" style="top: 20px; z-index: 1;">
-                <h5 class="fw-bold mb-3 text-primary"><i class="fa-solid fa-basket-shopping me-2"></i>Resumen de la Orden</h5>
+            <div class="card shadow-lg border-0 rounded-4 p-4 bg-dark text-white sticky-top" style="top: 20px; z-index: 1;">
+                <h5 class="fw-bold mb-4 text-primary"><i class="fa-solid fa-basket-shopping me-2"></i>Resumen de la Orden</h5>
 
-                <div class="list-group list-group-flush mb-3 overflow-y-auto" style="max-height: 280px;">
+                <div class="d-flex flex-column gap-3 mb-4 overflow-y-auto pe-2" style="max-height: 320px;">
                     @foreach (var item in resumenBolsa)
                     {
-                        <div class="list-group-item bg-transparent text-white border-secondary px-0 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center justify-content-between bg-black bg-opacity-25 p-3 rounded-4">
                             <div class="d-flex align-items-center">
-                                <img src="@item.Producto.ImagenUrl" class="rounded border border-secondary bg-light me-3 object-fit-cover" style="width: 45px; height: 45px;">
-                                <div style="max-width: 200px;">
-                                    <h6 class="mb-0 small fw-bold text-truncate" title="@item.Producto.Nombre">@item.Producto.Nombre</h6>
-                                    <small class="text-muted">Cantidad: @item.Cantidad</small>
+                                <div class="position-relative me-3">
+                                    <img src="@item.Producto.ImagenUrl" class="rounded-3 border border-secondary border-opacity-50 object-fit-cover bg-white" style="width: 55px; height: 55px;">
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary border border-dark shadow-sm" style="font-size: 0.8rem;">
+                                        @item.Cantidad
+                                    </span>
+                                </div>
+
+                                <div style="max-width: 170px;">
+                                    <h6 class="mb-1 small fw-bold text-truncate" title="@item.Producto.Nombre">@item.Producto.Nombre</h6>
+                                    @if (item.Cantidad > 1)
+                                    {
+                                        <small class="text-light opacity-75 d-block" style="font-size: 0.75rem;">$ @item.Producto.Precio.ToString("N0") c/u</small>
+                                    }
+                                    else
+                                    {
+                                        <small class="text-light opacity-75 d-block" style="font-size: 0.75rem;">Unidad</small>
+                                    }
                                 </div>
                             </div>
-                            <span class="fw-bold text-primary small">$ @((item.Producto.Precio * item.Cantidad).ToString("N0"))</span>
+                            <span class="fw-bold text-white small">$ @((item.Producto.Precio * item.Cantidad).ToString("N0"))</span>
                         </div>
                     }
                 </div>
 
-                <div class="border-top border-secondary pt-3 d-flex justify-content-between align-items-center mb-4">
-                    <span class="fw-bold text-secondary">TOTAL A PAGAR:</span>
-                    <h3 class="fw-black text-white mb-0">$ @Model.Total.ToString("N0")</h3>
+                <div class="bg-black bg-opacity-50 p-3 rounded-4 mb-4 border border-secondary border-opacity-25">
+                    <div class="d-flex justify-content-between align-items-center mb-2 small">
+                        <span class="text-light opacity-75">Subtotal productos:</span>
+                        <span class="text-light fw-semibold">$ @Model.Total.ToString("N0")</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3 small border-bottom border-secondary border-opacity-50 pb-3">
+                        <span class="text-light opacity-75">Despacho Priority:</span>
+                        <span class="badge bg-success text-dark fw-bold px-2">¡GRATIS!</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <span class="fw-bold text-light opacity-75">TOTAL A PAGAR:</span>
+                        <h3 class="fw-black text-primary mb-0">$ @Model.Total.ToString("N0")</h3>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold py-3 rounded-3 shadow">
-                    Confirmar Pedido y Pagar <i class="fa-solid fa-circle-arrow-right ms-1"></i>
+                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold py-3 rounded-4 shadow-lg">
+                    Confirmar Pedido y Pagar <i class="fa-solid fa-shield-halved ms-2"></i>
                 </button>
+                <div class="text-center mt-3">
+                    <small class="text-light opacity-50" style="font-size: 0.75rem;"><i class="fa-solid fa-lock text-success me-1"></i> Transacción segura encriptada con Webpay Plus</small>
+                </div>
             </div>
         </div>
     </form>
@@ -93,7 +127,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Diccionario estructurado de geografía chilena
         const regionesChile = {
             "Región de Arica y Parinacota": ["Arica", "Camarones", "Putre", "General Lagos"],
             "Región de Tarapacá": ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"],
@@ -116,7 +149,6 @@
         const selectRegion = document.getElementById('selectRegion');
         const selectComuna = document.getElementById('selectComuna');
 
-        // 1. Llenamos el select de Regiones apenas carga la página
         for (let region in regionesChile) {
             let option = document.createElement('option');
             option.value = region;
@@ -124,16 +156,10 @@
             selectRegion.appendChild(option);
         }
 
-        // 2. Escuchamos cuando el usuario cambia la Región
         selectRegion.addEventListener('change', function () {
-            // Limpiamos las comunas anteriores
             selectComuna.innerHTML = '<option value="" selected disabled>Seleccione Comuna...</option>';
-
             if (this.value) {
-                // Desbloqueamos el select de comunas
                 selectComuna.disabled = false;
-
-                // Cargamos las comunas exactas de la región elegida
                 let comunasArray = regionesChile[this.value];
                 comunasArray.forEach(function (comuna) {
                     let option = document.createElement('option');

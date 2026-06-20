@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Conectando con el Banco";
+
+    string urlWebpay = ViewBag.UrlWebpay as string ?? "";
+    string tokenWs = ViewBag.TokenWs as string ?? "";
+}
+
+<div class="container py-5 my-5 text-center">
+    @if (!string.IsNullOrWhiteSpace(urlWebpay) && !string.IsNullOrWhiteSpace(tokenWs))
+    {
+        <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+
+        <h3 class="fw-black text-dark">Conectando con la pasarela bancaria...</h3>
+
+        <p class="text-muted">
+            Por favor, no cierres ni refresques esta ventana.
+            Te estamos redirigiendo a Webpay Plus de forma segura.
+        </p>
+
+        <form id="formWebpay" action="@urlWebpay" method="post">
+            <input type="hidden" name="token_ws" value="@tokenWs" />
+
+            <noscript>
+                <button type="submit" class="btn btn-primary mt-3">
+                    Continuar a Webpay
+                </button>
+            </noscript>
+        </form>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.getElementById("formWebpay");
+
+                if (form) {
+                    setTimeout(function () {
+                        form.submit();
+                    }, 1000);
+                }
+            });
+        </script>
+    }
+    else
+    {
+        <div class="alert alert-danger text-start">
+            <strong>Error al conectar con Webpay.</strong>
+            <br />
+            No se recibió correctamente la URL o el token de Transbank.
+        </div>
+
+        <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">
+            Volver al checkout
+        </a>
+    }
+</div>
