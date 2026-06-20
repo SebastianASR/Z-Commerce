@@ -1,0 +1,70 @@
+﻿@model EcommerceApp.Models.Pedido
+
+@{
+    ViewData["Title"] = "Pedido Confirmado";
+}
+
+<div class="container py-5 text-start">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-5">
+                <i class="fa-solid fa-circle-check text-success display-3 mb-3"></i>
+                <h2 class="fw-black text-dark mb-1">¡Transacción Exitosa!</h2>
+                <p class="text-muted">Tu orden de hardware ha sido procesada y registrada en el core principal.</p>
+                <span class="badge bg-dark px-3 py-2 font-monospace mt-2">ORDEN_ID: #@Model.Id</span>
+            </div>
+
+            <div class="card shadow-sm border rounded-4 p-4 bg-white mb-4">
+                <h5 class="fw-bold mb-4 text-dark border-bottom pb-2"><i class="fa-solid fa-receipt text-muted me-2"></i>Comprobante de Despacho</h5>
+
+                <div class="row g-3 mb-4 text-muted small">
+                    <div class="col-sm-6">
+                        <strong class="text-dark d-block">RECEPTOR:</strong>
+                        @Model.NombreCompleto <br />
+                        @Model.Correo <br />
+                        @Model.Telefono
+                    </div>
+                    <div class="col-sm-6">
+                        <strong class="text-dark d-block">DESTINO DE DESPACHO:</strong>
+                        Calle @Model.Calle #@Model.Numero <br />
+                        @Model.DeptoBlockOficina <br />
+                        @Model.Comuna, @Model.Region
+                    </div>
+                </div>
+
+                <h6 class="fw-bold text-dark mb-3">Artículos Adquiridos</h6>
+                <div class="table-responsive border rounded-3 mb-3">
+                    <table class="table table-hover align-middle mb-0 small text-start">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="py-2 ps-3">Componente</th>
+                                <th class="py-2 text-center">Cantidad</th>
+                                <th class="py-2 text-end pe-3">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var det in Model.Detalles)
+                            {
+                                <tr>
+                                    <td class="ps-3 fw-bold text-dark">@det.Producto.Nombre</td>
+                                    <td class="text-center text-muted">x@(det.Cantidad)</td>
+                                    <td class="text-end pe-3 fw-semibold text-dark">$ @((det.PrecioUnitario * det.Cantidad).ToString("N0"))</td>
+                                </tr>
+                            }
+                            <tr class="table-active fw-bold">
+                                <td colspan="2" class="ps-3 text-dark">TOTAL FACTURADO:</td>
+                                <td class="text-end pe-3 text-primary fs-5">$ @Model.Total.ToString("N0")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-dark fw-bold px-4 py-2 rounded-3">
+                    <i class="fa-solid fa-house me-2"></i> Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

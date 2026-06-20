@@ -14,6 +14,8 @@ namespace EcommerceApp.Models
 
         public DbSet<Producto> Productos { get; set; } = null!;
         public DbSet<SolicitudVip> SolicitudesVip { get; set; } = null!;
+        public DbSet<Pedido> Pedidos { get; set; } = null!;
+        public DbSet<PedidoDetalle> PedidosDetalle { get; set; } = null!;
 
         // --- INYECCIÓN AUTOMÁTICA DE STOCK A LA NUBE (DATA SEEDING) ---
         protected override void OnModelCreating(ModelBuilder modelBuilder)

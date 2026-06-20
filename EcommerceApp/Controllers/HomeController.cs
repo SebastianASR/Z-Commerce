@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
 using EcommerceApp.Models;
-using Microsoft.AspNetCore.Authorization; // <-- REQUISITO VITAL PARA LOS ROLES
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -50,7 +50,7 @@ namespace EcommerceApp.Controllers
             return View(query.ToList());
         }
 
-        // --- EL MOTOR AGRUPADOR DE LINQ (CORREGIDO) ---
+        // --- EL MOTOR AGRUPADOR DE LINQ ---
         private List<CarritoItem> ObtenerBolsaAgrupada(List<int> listaIds)
         {
             if (!listaIds.Any()) return new List<CarritoItem>();
@@ -61,7 +61,6 @@ namespace EcommerceApp.Controllers
             return listaIds
                 .GroupBy(id => id)
                 .Select(grupo => {
-                    // AQUÍ ESTÁ EL ARREGLO: 'grupo.Key' en vez de 'group.Key'
                     var prod = productosDb.FirstOrDefault(p => p.Id == grupo.Key);
                     return prod != null ? new CarritoItem { Producto = prod, Cantidad = grupo.Count() } : null;
                 })
@@ -77,13 +76,6 @@ namespace EcommerceApp.Controllers
             listaIds.Add(id);
             HttpContext.Session.SetString("MiBolsa", JsonSerializer.Serialize(listaIds));
             return RedirectToAction("Index");
-        }
-
-        public IActionResult VerCarrito()
-        {
-            string? carritoBolsa = HttpContext.Session.GetString("MiBolsa");
-            var ids = string.IsNullOrEmpty(carritoBolsa) ? new List<int>() : JsonSerializer.Deserialize<List<int>>(carritoBolsa)!;
-            return View(ObtenerBolsaAgrupada(ids));
         }
 
         public IActionResult GetCarritoOffcanvas(int? idProducto)
@@ -121,27 +113,21 @@ namespace EcommerceApp.Controllers
             return View(modelo);
         }
 
-        // --- 🔥 NUEVO PANEL EXCLUSIVO PARA ADMINISTRADORES ---
         [Authorize(Roles = "Admin")]
         public IActionResult VerSolicitudes()
         {
-            // Trae las solicitudes más nuevas primero
             var lista = _context.SolicitudesVip.OrderByDescending(x => x.FechaSolicitud).ToList();
             return View(lista);
         }
-        // =======================================================
-        // 🔥 MÓDULO DE INVENTARIO (CRUD DE PRODUCTOS) 🔥
-        // =======================================================
 
+        // --- MÓDULO DE INVENTARIO (CRUD DE PRODUCTOS) ---
         [Authorize(Roles = "Admin")]
         public IActionResult GestionProductos()
         {
-            // Traemos todos los productos ordenados por el último agregado
             var productos = _context.Productos.OrderByDescending(p => p.Id).ToList();
             return View(productos);
         }
 
-        // --- 1. CREAR PRODUCTO ---
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CrearProducto()
@@ -156,13 +142,12 @@ namespace EcommerceApp.Controllers
             if (ModelState.IsValid)
             {
                 _context.Productos.Add(modelo);
-                await _context.SaveChangesAsync(); // Se va a la nube de Neon
+                await _context.SaveChangesAsync();
                 return RedirectToAction("GestionProductos");
             }
             return View(modelo);
         }
 
-        // --- 2. EDITAR PRODUCTO ---
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult EditarProducto(int id)
@@ -185,7 +170,6 @@ namespace EcommerceApp.Controllers
             return View(modelo);
         }
 
-        // --- 3. ELIMINAR PRODUCTO ---
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> EliminarProducto(int id)
@@ -193,11 +177,12 @@ namespace EcommerceApp.Controllers
             var producto = _context.Productos.Find(id);
             if (producto != null)
             {
-                _context.Productos.Remove(producto);
+                _context.Remove(producto);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("GestionProductos");
         }
+
         public IActionResult Privacy() { return View(); }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

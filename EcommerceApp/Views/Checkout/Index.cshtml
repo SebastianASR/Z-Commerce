@@ -1,0 +1,149 @@
+﻿@model EcommerceApp.Models.Pedido
+
+@{
+    ViewData["Title"] = "Checkout";
+    var resumenBolsa = ViewBag.ResumenBolsa as List<EcommerceApp.Models.CarritoItem> ?? new List<EcommerceApp.Models.CarritoItem>();
+}
+
+<div class="container py-5 text-start">
+    <h2 class="fw-black mb-4"><i class="fa-solid fa-credit-card text-primary me-2"></i>Finalizar Compra</h2>
+
+    <form asp-action="Index" method="post" class="row g-4">
+        <div class="col-lg-7">
+            <div class="card shadow-sm border rounded-4 p-4 bg-white">
+                <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-address-card text-muted me-2"></i>1. Datos de Contacto</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-12">
+                        <label asp-for="NombreCompleto" class="form-label small fw-bold text-muted">NOMBRE COMPLETO</label>
+                        <input asp-for="NombreCompleto" class="form-control rounded-3" placeholder="Ej: Juan Pérez" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Correo" class="form-label small fw-bold text-muted">CORREO ELECTRÓNICO</label>
+                        <input asp-for="Correo" type="email" class="form-control rounded-3" placeholder="juan.perez@correo.cl" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Telefono" class="form-label small fw-bold text-muted">TELÉFONO MÓVIL</label>
+                        <input asp-for="Telefono" class="form-control rounded-3" placeholder="+56912345678" required />
+                    </div>
+                </div>
+
+                <h5 class="fw-bold mb-3 text-dark border-top pt-3"><i class="fa-solid fa-truck text-muted me-2"></i>2. Dirección de Despacho</h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Region" class="form-label small fw-bold text-muted">REGIÓN</label>
+                        <select asp-for="Region" id="selectRegion" class="form-select rounded-3 text-dark" required>
+                            <option value="" selected disabled>Seleccione Región...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Comuna" class="form-label small fw-bold text-muted">COMUNA</label>
+                        <select asp-for="Comuna" id="selectComuna" class="form-select rounded-3 text-dark" required disabled>
+                            <option value="" selected disabled>Seleccione Comuna...</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-8">
+                        <label asp-for="Calle" class="form-label small fw-bold text-muted">CALLE / AVENIDA</label>
+                        <input asp-for="Calle" class="form-control rounded-3" placeholder="Ej: Av. Libertador Bernardo O'Higgins" required />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Numero" class="form-label small fw-bold text-muted">NÚMERO</label>
+                        <input asp-for="Numero" class="form-control rounded-3" placeholder="Ej: 1234" required />
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="DeptoBlockOficina" class="form-label small fw-bold text-muted">DEPARTAMENTO / BLOCK / CASA (OPCIONAL)</label>
+                        <input asp-for="DeptoBlockOficina" class="form-control rounded-3" placeholder="Ej: Depto 402, Block C" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card shadow-sm border rounded-4 p-4 bg-dark text-white sticky-top" style="top: 20px; z-index: 1;">
+                <h5 class="fw-bold mb-3 text-primary"><i class="fa-solid fa-basket-shopping me-2"></i>Resumen de la Orden</h5>
+
+                <div class="list-group list-group-flush mb-3 overflow-y-auto" style="max-height: 280px;">
+                    @foreach (var item in resumenBolsa)
+                    {
+                        <div class="list-group-item bg-transparent text-white border-secondary px-0 d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <img src="@item.Producto.ImagenUrl" class="rounded border border-secondary bg-light me-3 object-fit-cover" style="width: 45px; height: 45px;">
+                                <div style="max-width: 200px;">
+                                    <h6 class="mb-0 small fw-bold text-truncate" title="@item.Producto.Nombre">@item.Producto.Nombre</h6>
+                                    <small class="text-muted">Cantidad: @item.Cantidad</small>
+                                </div>
+                            </div>
+                            <span class="fw-bold text-primary small">$ @((item.Producto.Precio * item.Cantidad).ToString("N0"))</span>
+                        </div>
+                    }
+                </div>
+
+                <div class="border-top border-secondary pt-3 d-flex justify-content-between align-items-center mb-4">
+                    <span class="fw-bold text-secondary">TOTAL A PAGAR:</span>
+                    <h3 class="fw-black text-white mb-0">$ @Model.Total.ToString("N0")</h3>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold py-3 rounded-3 shadow">
+                    Confirmar Pedido y Pagar <i class="fa-solid fa-circle-arrow-right ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Diccionario estructurado de geografía chilena
+        const regionesChile = {
+            "Región de Arica y Parinacota": ["Arica", "Camarones", "Putre", "General Lagos"],
+            "Región de Tarapacá": ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"],
+            "Región de Antofagasta": ["Antofagasta", "Mejillones", "Sierra Gorda", "Taltal", "Calama", "Ollagüe", "San Pedro de Atacama", "Tocopilla", "María Elena"],
+            "Región de Atacama": ["Copiapó", "Caldera", "Tierra Amarilla", "Chañaral", "Diego de Almagro", "Vallenar", "Alto del Carmen", "Freirina", "Huasco"],
+            "Región de Coquimbo": ["La Serena", "Coquimbo", "Andacollo", "La Higuera", "Paihuano", "Vicuña", "Illapel", "Canela", "Los Vilos", "Salamanca", "Ovalle", "Combarbalá", "Monte Patria", "Punitaqui", "Río Hurtado"],
+            "Región de Valparaíso": ["Valparaíso", "Casablanca", "Concón", "Juan Fernández", "Puchuncaví", "Quintero", "Viña del Mar", "Isla de Pascua", "Los Andes", "Calle Larga", "Rinconada", "San Esteban", "La Ligua", "Cabildo", "Papudo", "Petorca", "Zapallar", "Quillota", "Calera", "Hijuelas", "La Cruz", "Nogales", "San Antonio", "Algarrobo", "Cartagena", "El Quisco", "El Tabo", "Santo Domingo", "San Felipe", "Catemu", "Llaillay", "Panquehue", "Putaendo", "Santa María", "Quilpué", "Limache", "Olmué", "Villa Alemana"],
+            "Región Metropolitana de Santiago": ["Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central", "Huechuraba", "Independencia", "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Las Condes", "Lo Barnechea", "Lo Espejo", "Lo Prado", "Macul", "Maipú", "Ñuñoa", "Pedro Aguirre Cerda", "Peñalolén", "Providencia", "Pudahuel", "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Joaquín", "San Miguel", "San Ramón", "Santiago", "Vitacura", "Puente Alto", "Pirque", "San José de Maipo", "Colina", "Lampa", "Tiltil", "San Bernardo", "Buin", "Calera de Tango", "Paine", "Melipilla", "Alhué", "Curacaví", "María Pinto", "San Pedro", "Talagante", "El Monte", "Isla de Maipo", "Padre Hurtado", "Peñaflor"],
+            "Región del Libertador General Bernardo O'Higgins": ["Rancagua", "Codegua", "Coinco", "Coltauco", "Doñihue", "Graneros", "Las Cabras", "Machalí", "Malloa", "Mostazal", "Olivar", "Peumo", "Pichidegua", "Quinta de Tilcoco", "Rengo", "Requínoa", "San Vicente", "Pichilemu", "La Estrella", "Litueche", "Marchihue", "Navidad", "Paredones", "San Fernando", "Chépica", "Chimbarongo", "Lolol", "Nancagua", "Palmilla", "Peralillo", "Placilla", "Pumanque", "Santa Cruz"],
+            "Región del Maule": ["Talca", "Constitución", "Curepto", "Empedrado", "Maule", "Pelarco", "Pencahue", "Río Claro", "San Clemente", "San Rafael", "Cauquenes", "Chanco", "Pelluhue", "Curicó", "Hualañé", "Licantén", "Molina", "Rauco", "Romeral", "Sagrada Familia", "Teno", "Vichuquén", "Linares", "Colbún", "Longaví", "Parral", "Retiro", "San Javier", "Villa Alegre", "Yerbas Buenas"],
+            "Región de Ñuble": ["Cobquecura", "Coelemu", "Ninhue", "Portezuelo", "Quirihue", "Ránquil", "Treguaco", "Bulnes", "Chillán Viejo", "Chillán", "El Carmen", "Pemuco", "Pinto", "Quillón", "San Ignacio", "Yungay", "Coihueco", "Ñiquén", "San Carlos", "San Fabián", "San Nicolás"],
+            "Región del Biobío": ["Concepción", "Coronel", "Chiguayante", "Florida", "Hualqui", "Lota", "Penco", "San Pedro de la Paz", "Santa Juana", "Talcahuano", "Tomé", "Hualpén", "Lebu", "Arauco", "Cañete", "Contulmo", "Curanilahue", "Los Álamos", "Tirúa", "Los Ángeles", "Antuco", "Cabrero", "Laja", "Mulchén", "Nacimiento", "Negrete", "Quilaco", "Quilleco", "San Rosendo", "Santa Bárbara", "Tucapel", "Yumbel", "Alto Biobío"],
+            "Región de La Araucanía": ["Temuco", "Carahue", "Cunco", "Curarrehue", "Freire", "Galvarino", "Gorbea", "Lautaro", "Loncoche", "Melipeuco", "Nueva Imperial", "Padre las Casas", "Perquenco", "Pitrufquén", "Pucón", "Saavedra", "Teodoro Schmidt", "Toltén", "Vilcún", "Villarrica", "Cholchol", "Angol", "Collipulli", "Curacautín", "Ercilla", "Lonquimay", "Los Sauces", "Lumaco", "Purén", "Renaico", "Traiguén", "Victoria"],
+            "Región de Los Ríos": ["Valdivia", "Corral", "Lanco", "Los Lagos", "Máfil", "Mariquina", "Paillaco", "Panguipulli", "La Unión", "Futrono", "Lago Ranco", "Río Bueno"],
+            "Región de Los Lagos": ["Puerto Montt", "Calbuco", "Cochamó", "Fresia", "Frutillar", "Los Muermos", "Llanquihue", "Maullín", "Puerto Varas", "Castro", "Ancud", "Chonchi", "Curaco de Vélez", "Dalcahue", "Puqueldón", "Queilén", "Quellón", "Quemchi", "Quinchao", "Osorno", "Puerto Octay", "Purranque", "Puyehue", "Río Negro", "San Juan de la Costa", "San Pablo", "Chaitén", "Futaleufú", "Hualaihué", "Palena"],
+            "Región de Aysén del General Carlos Ibáñez del Campo": ["Coyhaique", "Lago Verde", "Aysén", "Cisnes", "Guaitecas", "Cochrane", "O'Higgins", "Tortel", "Chile Chico", "Río Ibáñez"],
+            "Región de Magallanes y de la Antártica Chilena": ["Punta Arenas", "Laguna Blanca", "Río Verde", "San Gregorio", "Cabo de Hornos (Ex Navarino)", "Antártica", "Porvenir", "Primavera", "Timaukel", "Natales", "Torres del Paine"]
+        };
+
+        const selectRegion = document.getElementById('selectRegion');
+        const selectComuna = document.getElementById('selectComuna');
+
+        // 1. Llenamos el select de Regiones apenas carga la página
+        for (let region in regionesChile) {
+            let option = document.createElement('option');
+            option.value = region;
+            option.text = region;
+            selectRegion.appendChild(option);
+        }
+
+        // 2. Escuchamos cuando el usuario cambia la Región
+        selectRegion.addEventListener('change', function () {
+            // Limpiamos las comunas anteriores
+            selectComuna.innerHTML = '<option value="" selected disabled>Seleccione Comuna...</option>';
+
+            if (this.value) {
+                // Desbloqueamos el select de comunas
+                selectComuna.disabled = false;
+
+                // Cargamos las comunas exactas de la región elegida
+                let comunasArray = regionesChile[this.value];
+                comunasArray.forEach(function (comuna) {
+                    let option = document.createElement('option');
+                    option.value = comuna;
+                    option.text = comuna;
+                    selectComuna.appendChild(option);
+                });
+            } else {
+                selectComuna.disabled = true;
+            }
+        });
+    });
+</script>
