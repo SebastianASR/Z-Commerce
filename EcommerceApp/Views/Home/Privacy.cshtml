@@ -1,6 +1,76 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Garantía y Seguridad";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container my-5 text-start">
+
+    <div class="border-bottom pb-3 mb-5 d-flex justify-content-between align-items-center">
+        <div>
+            <span class="badge bg-primary mb-2 tracking-wider"><i class="fa-solid fa-shield-halved me-1"></i> POLÍTICA OFICIAL 2026</span>
+            <h1 class="fw-extrabold display-6 mb-0">Garantía Z-Commerce & Seguridad de Transacción</h1>
+        </div>
+        <i class="fa-solid fa-microchip text-primary opacity-25 d-none d-md-block" style="font-size: 3.5rem;"></i>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-7">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+                <h4 class="fw-bold text-dark mb-4">
+                    <i class="fa-solid fa-award text-primary me-2"></i> Cobertura de Componentes
+                </h4>
+
+                <div class="mb-4">
+                    <h6 class="fw-bold"><i class="fa-solid fa-check text-success me-2"></i> Garantía DOA (Dead on Arrival)</h6>
+                    <p class="text-muted small">Si tu componente llega con fallas de fábrica o no da vídeo en el primer posteo de la placa, te enviamos un reemplazo inmediato a costo cero en un plazo máximo de 48 horas hábiles.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="fw-bold"><i class="fa-solid fa-check text-success me-2"></i> 3 Años de Garantía de Servidor</h6>
+                    <p class="text-muted small">Todos nuestros procesadores de la línea <em>Server-X</em> y kits de Memoria RAM cuentan con garantía extendida directamente con el fabricante, gestionada a través de nuestro nodo central en Santiago.</p>
+                </div>
+
+                <div class="p-3 bg-light rounded-3 border-start border-warning border-4 mt-auto">
+                    <small class="text-dark fw-bold"><i class="fa-solid fa-triangle-exclamation text-warning me-1"></i> Cláusula de Overclocking:</small>
+                    <p class="text-muted small mb-0 mt-1">El <em>delid</em> de procesadores, manipulación física del socket o la aplicación de voltajes por encima del límite seguro especificado en el perfil XMP/EXPO anula de forma inmediata la garantía térmica.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-dark text-light">
+                <h4 class="fw-bold text-white mb-4">
+                    <i class="fa-solid fa-lock text-primary me-2"></i> Arquitectura de Pago
+                </h4>
+
+                <div class="d-flex align-items-start mb-4">
+                    <i class="fa-solid fa-file-shield text-primary fs-3 me-3 mt-1"></i>
+                    <div>
+                        <h6 class="fw-bold mb-1 text-white">Cifrado TLS 1.3</h6>
+                        <p class="text-secondary small mb-0">Toda la sesión de usuario y la información de despacho viaja a través de túneles seguros con encriptación AES-256. No registramos datos de tarjetas en nuestra base de datos.</p>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-start mb-4">
+                    <i class="fa-solid fa-server text-primary fs-3 me-3 mt-1"></i>
+                    <div>
+                        <h6 class="fw-bold mb-1 text-white">Mitigación Anti-DDoS</h6>
+                        <p class="text-secondary small mb-0">Nuestros endpoints de compra están protegidos contra ataques de fuerza bruta y saturación de peticiones mediante firewall perimetral.</p>
+                    </div>
+                </div>
+
+                <div class="mt-auto pt-3 border-top border-secondary text-center">
+                    <small class="text-secondary tracking-widest">ESTADO DEL NODO SSL: <span class="text-success fw-bold">100% SEGURO</span></small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-5 text-center">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-dark fw-bold px-4 py-2 rounded-3 shadow-sm">
+            <i class="fa-solid fa-arrow-left me-2"></i> Volver al Catálogo
+        </a>
+    </div>
+
+</div>

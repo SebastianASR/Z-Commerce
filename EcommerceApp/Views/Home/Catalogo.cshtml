@@ -1,0 +1,91 @@
+﻿@model IEnumerable<EcommerceApp.Models.Producto>
+
+@{
+    ViewData["Title"] = "Catálogo de Hardware";
+    // Capturamos lo que el usuario escribió antes para que no se le borre del input
+    string busquedaActual = Context.Request.Query["buscar"].ToString();
+    string catActual = Context.Request.Query["categoria"].ToString();
+    string ordActual = Context.Request.Query["orden"].ToString();
+}
+
+<div class="container my-4 text-start">
+
+    <form asp-controller="Home" asp-action="Catalogo" method="get">
+        <div class="bg-dark p-4 rounded-4 shadow-sm mb-5 text-light border border-secondary">
+            <div class="row g-3 align-items-center">
+
+                <div class="col-md-5">
+                    <label class="form-label small fw-bold text-uppercase tracking-wider text-primary">Buscador por palabra</label>
+                    <div class="input-group">
+                        <input type="text" name="buscar" value="@busquedaActual" class="form-control bg-light border-0" placeholder="Ej: Ryzen, RTX, 32GB...">
+                        <button type="submit" class="btn btn-primary fw-bold"><i class="fa-solid fa-magnifying-glass me-1"></i> Buscar</button>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold text-uppercase tracking-wider text-primary">Filtrar por Categoría</label>
+                    <select name="categoria" class="form-select bg-light border-0" onchange="this.form.submit()">
+                        <option value="">Todas las categorías</option>
+                        <option value="1" selected="@(catActual == "1")">Procesadores (CPU)</option>
+                        <option value="2" selected="@(catActual == "2")">Tarjetas Gráficas (GPU)</option>
+                        <option value="3" selected="@(catActual == "3")">Memorias RAM</option>
+                        <option value="4" selected="@(catActual == "4")">Almacenamiento & Placas</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold text-uppercase tracking-wider text-primary">Ordenar por precio</label>
+                    <select name="orden" class="form-select bg-light border-0" onchange="this.form.submit()">
+                        <option value="" selected="@(string.IsNullOrEmpty(ordActual))">Relevancia</option>
+                        <option value="1" selected="@(ordActual == "1")">Menor a Mayor $</option>
+                        <option value="2" selected="@(ordActual == "2")">Mayor a Menor $</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+        <h4 class="fw-bold mb-0">Stock Encontrado</h4>
+        <span class="badge bg-primary fs-6">@Model.Count() componentes</span>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning py-5 text-center rounded-4 shadow-sm" role="alert">
+            <i class="fa-solid fa-triangle-exclamation fs-1 mb-3 d-block"></i>
+            <h5 class="fw-bold">No encontramos ninguna coincidencia</h5>
+            <p class="mb-0 text-muted small">Intenta buscando con palabras más cortas como "RTX", "Intel" o borra los filtros.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+            @foreach (var producto in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border rounded-4 overflow-hidden card-product bg-white">
+                        <div class="position-relative bg-dark">
+                            <span class="position-absolute top-0 end-0 m-3 badge bg-dark border border-secondary fw-bold z-1 shadow-sm">SKU: ZC-@producto.Id</span>
+                            <img src="@producto.ImagenUrl" class="card-img-top object-fit-cover" alt="@producto.Nombre" style="height: 200px;">
+                        </div>
+
+                        <div class="card-body d-flex flex-column p-4">
+                            <h5 class="card-title fw-bold mb-2">@producto.Nombre</h5>
+                            <p class="card-text text-muted small flex-grow-1">@producto.Descripcion</p>
+
+                            <div class="mt-3 pt-3 border-top d-flex justify-content-between align-items-center">
+                                <h4 class="text-dark fw-black mb-0">$ @producto.Precio.ToString("N0")</h4>
+                                <button type="button" onclick="abrirCarritoLateral(@producto.Id)" class="btn btn-primary fw-bold px-3 py-2 shadow-sm">
+                                    <i class="fa-solid fa-cart-plus me-1"></i> Agregar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>
