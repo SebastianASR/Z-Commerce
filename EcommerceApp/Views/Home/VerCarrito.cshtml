@@ -1,54 +1,93 @@
-﻿@model IEnumerable<EcommerceApp.Models.Producto>
+﻿@model List<EcommerceApp.Models.CarritoItem>
 
 @{
-    ViewData["Title"] = "Mi Carrito";
-    // Magia de C#: Suma automáticamente la propiedad 'Precio' de todos los objetos en la lista
-    int sumaTotal = Model.Sum(p => p.Precio);
+    ViewData["Title"] = "Bolsa de Compra";
+    int totalBolsa = Model.Sum(x => x.Subtotal);
 }
 
-<div class="container mt-5 text-start">
-    <h1 class="fw-bold mb-4">Carro de Compras</h1>
+<div class="container py-5 text-start">
+    <h2 class="fw-extrabold mb-4 text-dark">Detalle de tu <span class="text-primary">Bolsa</span></h2>
 
     @if (!Model.Any())
     {
-        <div class="alert alert-warning text-center fs-5 py-5 shadow-sm" role="alert">
-            Tu carrito está más vacío que mi billetera a fin de mes. 🥲 <br />
-            <a asp-action="Index" class="btn btn-dark mt-3 fw-bold">Volver al catálogo</a>
+        <div class="alert alert-light text-center py-5 rounded-4 border shadow-sm">
+            <i class="fa-solid fa-cart-shopping fs-1 mb-3 text-muted"></i>
+            <h4 class="fw-bold text-dark">No hay componentes en tu bolsa</h4>
+            <p class="text-muted">Vuelve al catálogo para equipar tu setup.</p>
+            <a asp-action="Catalogo" class="btn btn-primary fw-bold px-4 py-2 mt-2 shadow-sm">Ir al Catálogo</a>
         </div>
     }
     else
     {
-        <div class="card shadow-sm border-0">
-            <div class="card-body">
-                <table class="table table-hover align-middle">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Producto</th>
-                            <th class="text-end">Precio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td class="fw-bold fs-5">@item.Nombre</td>
-                                <td class="text-primary fw-bold text-end fs-5">$ @item.Precio.ToString("N0")</td>
-                            </tr>
-                        }
-                    </tbody>
-                    <tfoot class="table-light">
-                        <tr>
-                            <td class="text-end fw-bold fs-5">TOTAL A PAGAR:</td>
-                            <td class="text-success fw-bold text-end fs-4">$ @sumaTotal.ToString("N0") CLP</td>
-                        </tr>
-                    </tfoot>
-                </table>
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border rounded-4 overflow-hidden bg-white">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 text-start">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th scope="col" class="py-3 ps-4">Componente</th>
+                                    <th scope="col" class="py-3 text-center">Precio Unitario</th>
+                                    <th scope="col" class="py-3 text-center">Cantidad</th>
+                                    <th scope="col" class="py-3 text-end pe-4">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0">
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="ps-4 py-3">
+                                            <div class="d-flex align-items-center">
+                                                <img src="@item.Producto.ImagenUrl" class="rounded-3 object-fit-cover me-3 border" style="width: 60px; height: 60px;">
+                                                <div>
+                                                    <h6 class="fw-bold mb-0 text-dark">@item.Producto.Nombre</h6>
+                                                    <small class="text-muted">SKU: ZC-100@(item.Producto.Id)</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center fw-bold text-muted">
+                                            $ @item.Producto.Precio.ToString("N0")
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-primary fs-6 px-3 py-2 rounded-pill shadow-sm">@(item.Cantidad)</span>
+                                        </td>
+                                        <td class="text-end pe-4 fw-black text-dark fs-5">
+                                            $ @item.Subtotal.ToString("N0")
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="text-end mt-4">
-            <a asp-action="Index" class="btn btn-outline-dark btn-lg me-2 fw-bold">Seguir Comprando</a>
-            <button class="btn btn-primary btn-lg fw-bold">Pagar Ahora</button>
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 rounded-4 p-4 bg-dark text-white">
+                    <h5 class="fw-bold border-bottom border-secondary pb-3 mb-4">Resumen de la Orden</h5>
+
+                    <div class="d-flex justify-content-between mb-2 small">
+                        <span class="text-secondary">Subtotal componentes:</span>
+                        <span class="fw-bold">$ @totalBolsa.ToString("N0")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 small">
+                        <span class="text-secondary">Despacho (Quinta Normal):</span>
+                        <span class="text-success fw-bold">GRATIS</span>
+                    </div>
+
+                    <hr class="border-secondary my-3">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <span class="fw-bold">TOTAL:</span>
+                        <h3 class="text-primary fw-black mb-0">$ @totalBolsa.ToString("N0")</h3>
+                    </div>
+
+                    <button type="button" class="btn btn-success btn-lg fw-bold w-100 shadow-sm mb-2" onclick="alert('¡Módulo de Pago Z-Pay conectado a Neon en construcción!')">
+                        <i class="fa-solid fa-shield-halved me-2"></i> Pagar Ahora
+                    </button>
+                    <a asp-action="Catalogo" class="btn btn-outline-light btn-sm w-100 opacity-75">Seguir agregando hardware</a>
+                </div>
+            </div>
         </div>
     }
 </div>

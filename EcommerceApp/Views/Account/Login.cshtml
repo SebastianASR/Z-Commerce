@@ -1,0 +1,42 @@
+﻿@model EcommerceApp.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-lg border rounded-4 bg-dark text-white p-4" style="border-color: #334155 !important;">
+                <div class="card-body text-start">
+                    <div class="text-center mb-4">
+                        <h3 class="fw-black text-primary mb-1"><i class="fa-solid fa-shield-halved me-2"></i>Z-ACCESO</h3>
+                        <p class="text-muted small">Ingresa tus credenciales para operar en el sistema</p>
+                    </div>
+
+                    <form asp-action="Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label small fw-bold text-secondary">CORREO ELECTRÓNICO</label>
+                            <input asp-for="Email" type="email" class="form-control bg-transparent text-white border-secondary rounded-3 py-2" placeholder="ejemplo@zcommerce.cl" required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Password" class="form-label small fw-bold text-secondary">CONTRASEÑA</label>
+                            <input asp-for="Password" type="password" class="form-control bg-transparent text-white border-secondary rounded-3 py-2" placeholder="••••••••" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 fw-bold py-2 rounded-3 shadow-sm mb-3">
+                            Establecer Conexión <i class="fa-solid fa-arrow-right-to-bracket ms-1"></i>
+                        </button>
+                    </form>
+
+                    <div class="text-center pt-2 border-top border-secondary mt-3">
+                        <p class="mb-0 small text-muted">¿No tienes cuenta de partner? <a asp-action="Register" class="text-primary text-decoration-none fw-bold">Regístrate aquí</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

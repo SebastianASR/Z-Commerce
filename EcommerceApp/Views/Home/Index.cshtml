@@ -22,7 +22,7 @@
 
         <div class="d-flex flex-wrap gap-3 mt-4">
             <a asp-action="Catalogo" class="btn btn-primary btn-lg fw-bold px-4 py-3 shadow">
-                Abrir Catalogo <i class="fa-solid fa-arrow-right ms-2"></i>
+                Abrir Catálogo <i class="fa-solid fa-arrow-right ms-2"></i>
             </a>
             <a asp-action="Privacy" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 opacity-75">
                 <i class="fa-solid fa-shield-halved me-2"></i>Nuestra Garantía
@@ -43,48 +43,40 @@
     <span><i class="fa-solid fa-shield me-1 text-warning"></i> ASUS ROG ALLIANCE</span>
 </div>
 
-<h4 class="fw-bold text-start mb-3">Explorar por Componente</h4>
+<h4 class="fw-bold text-start mb-3">Componentes</h4>
 <div class="row row-cols-2 row-cols-md-4 g-3 mb-5 text-start">
     <div class="col">
-        <a asp-action="Catalogo" class="text-decoration-none">
-            <div class="p-3 bg-white rounded-4 border shadow-sm d-flex align-items-center cat-card transition-all">
-                <div class="bg-dark text-primary p-3 rounded-3 me-3 fs-4"><i class="fa-solid fa-microchip"></i></div>
-                <div><h6 class="fw-bold text-dark mb-0">Procesadores</h6><small class="text-muted">AMD & Intel</small></div>
-            </div>
-        </a>
+        <div class="p-3 bg-white rounded-4 border shadow-sm d-flex align-items-center">
+            <div class="bg-dark text-primary p-3 rounded-3 me-3 fs-4"><i class="fa-solid fa-microchip"></i></div>
+            <div><h6 class="fw-bold text-dark mb-0">Procesadores</h6><small class="text-muted">AMD & Intel</small></div>
+        </div>
     </div>
     <div class="col">
-        <a asp-action="Catalogo" class="text-decoration-none">
-            <div class="p-3 bg-white rounded-4 border shadow-sm d-flex align-items-center cat-card transition-all">
-                <div class="bg-dark text-success p-3 rounded-3 me-3 fs-4"><i class="fa-solid fa-vr-cardboard"></i></div>
-                <div><h6 class="fw-bold text-dark mb-0">Tarjetas Gráficas</h6><small class="text-muted">RTX & RX</small></div>
-            </div>
-        </a>
+        <div class="p-3 bg-white rounded-4 border shadow-sm d-flex align-items-center">
+            <div class="bg-dark text-success p-3 rounded-3 me-3 fs-4"><i class="fa-solid fa-vr-cardboard"></i></div>
+            <div><h6 class="fw-bold text-dark mb-0">Tarjetas Gráficas</h6><small class="text-muted">RTX & RX</small></div>
+        </div>
     </div>
     <div class="col">
-        <a asp-action="Catalogo" class="text-decoration-none">
-            <div class="p-3 bg-white rounded-4 border shadow-sm d-flex align-items-center cat-card transition-all">
-                <div class="bg-dark text-warning p-3 rounded-3 me-3 fs-4"><i class="fa-solid fa-memory"></i></div>
-                <div><h6 class="fw-bold text-dark mb-0">Memorias RAM</h6><small class="text-muted">DDR4 & DDR5</small></div>
-            </div>
-        </a>
+        <div class="p-3 bg-white rounded-4 border shadow-sm d-flex align-items-center">
+            <div class="bg-dark text-warning p-3 rounded-3 me-3 fs-4"><i class="fa-solid fa-memory"></i></div>
+            <div><h6 class="fw-bold text-dark mb-0">Memorias RAM</h6><small class="text-muted">DDR4 & DDR5</small></div>
+        </div>
     </div>
     <div class="col">
-        <a asp-action="Catalogo" class="text-decoration-none">
-            <div class="p-3 bg-white rounded-4 border shadow-sm d-flex align-items-center cat-card transition-all">
-                <div class="bg-dark text-danger p-3 rounded-3 me-3 fs-4"><i class="fa-solid fa-hard-drive"></i></div>
-                <div><h6 class="fw-bold text-dark mb-0">Almacenamiento</h6><small class="text-muted">NVMe M.2</small></div>
-            </div>
-        </a>
+        <div class="p-3 bg-white rounded-4 border shadow-sm d-flex align-items-center">
+            <div class="bg-dark text-danger p-3 rounded-3 me-3 fs-4"><i class="fa-solid fa-hard-drive"></i></div>
+            <div><h6 class="fw-bold text-dark mb-0">Almacenamiento</h6><small class="text-muted">NVMe M.2</small></div>
+        </div>
     </div>
 </div>
 
 <div class="d-flex justify-content-between align-items-end mb-4">
-    <div>
+    <div class="text-start">
         <span class="text-primary fw-bold small text-uppercase tracking-wider">Top Ventas</span>
-        <h3 class="fw-bold mb-0 text-start">Selección Flagship</h3>
+        <h3 class="fw-bold mb-0">Selección Flagship</h3>
     </div>
-    <a asp-action="Catalogo" class="btn btn-outline-dark fw-bold small">Ver todo el stock </a>
+    <a asp-action="Catalogo" class="btn btn-outline-dark fw-bold small">Ver todo el stock</a>
 </div>
 
 <div class="row row-cols-1 row-cols-md-3 g-4 mb-5 text-start">
@@ -93,14 +85,14 @@
         int precioNormal = (int)(producto.Precio * 1.15);
 
         <div class="col">
-            <div class="card h-100 shadow-sm border rounded-4 overflow-hidden card-product transition-all bg-white">
+            <div class="card h-100 shadow-sm border rounded-4 overflow-hidden card-product bg-white">
                 <div class="position-relative bg-dark">
                     <span class="position-absolute top-0 end-0 m-3 badge bg-primary fw-bold z-1 shadow-sm">Flagship</span>
                     <img src="@producto.ImagenUrl" class="card-img-top object-fit-cover" alt="@producto.Nombre" style="height: 220px;">
                 </div>
 
                 <div class="card-body d-flex flex-column p-4">
-                    <small class="text-muted fw-bold small">SKU: ZC-100@producto.Id</small>
+                    <small class="text-muted fw-bold small">SKU: ZC-100@(producto.Id)</small>
                     <h5 class="card-title fw-bold mt-1 mb-2 text-dark">@producto.Nombre</h5>
                     <p class="card-text text-muted small flex-grow-1">@producto.Descripcion</p>
 
@@ -135,7 +127,7 @@
             <p class="text-secondary mb-0 mt-2 fs-6">Cotiza de forma directa con nuestro equipo de ingenieros. Configuraciones en Rack 2U con fuentes redundantes y arreglos NVMe RAID 10.</p>
         </div>
         <div class="col-md-4 text-md-end mt-4 mt-md-0">
-            <a asp-action="Privacy" class="btn btn-primary btn-lg fw-bold px-4 py-3">
+            <a asp-action="AsesoriaVip" class="btn btn-primary btn-lg fw-bold px-4 py-3">
                 <i class="fa-solid fa-server me-2"></i> Solicitar Asesoría VIP
             </a>
         </div>
@@ -150,7 +142,7 @@
             <div class="text-warning mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
             <p class="small text-muted flex-grow-1">"Compré dos Ryzen 9 7950X para armar un clúster de virtualización de bases de datos. El envío llegó a Quinta Normal en menos de 24 horas. Cero dramas con las temperaturas."</p>
             <div class="d-flex align-items-center pt-3 border-top">
-                <div class="bg-primary text-white rounded-circle p-2 me-3 fw-bold" style="width:40px; height:40px; text-align:center;">PR</div>
+                <div class="bg-primary text-white rounded-circle p-2 me-3 fw-bold" style="width:40px; height:40px; text-align:center; line-height: 24px;">PR</div>
                 <div><h6 class="fw-bold mb-0 small">Pablo Rojas</h6><small class="text-success fw-bold" style="font-size:0.75rem;"><i class="fa-solid fa-circle-check me-1"></i>SysAdmin Verificado</small></div>
             </div>
         </div>
@@ -161,7 +153,7 @@
             <div class="text-warning mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
             <p class="small text-muted flex-grow-1">"El soporte me ayudó a verificar si el kit G.Skill de 6000MHz iba a chocar con el perfil EXPO de mi placa MSI. Ensamblé y dio vídeo a la primera. Recomendados."</p>
             <div class="d-flex align-items-center pt-3 border-top">
-                <div class="bg-dark text-white rounded-circle p-2 me-3 fw-bold" style="width:40px; height:40px; text-align:center;">AG</div>
+                <div class="bg-dark text-white rounded-circle p-2 me-3 fw-bold" style="width:40px; height:40px; text-align:center; line-height: 24px;">AG</div>
                 <div><h6 class="fw-bold mb-0 small">Ágata M.</h6><small class="text-success fw-bold" style="font-size:0.75rem;"><i class="fa-solid fa-circle-check me-1"></i>DevOps Lead</small></div>
             </div>
         </div>
@@ -172,7 +164,7 @@
             <div class="text-warning mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
             <p class="small text-muted flex-grow-1">"La RTX 4090 venía con su sello de fábrica intacto y la caja impecable. El cifrado de pago me dio mucha confianza para pasar un monto tan alto."</p>
             <div class="d-flex align-items-center pt-3 border-top">
-                <div class="bg-success text-white rounded-circle p-2 me-3 fw-bold" style="width:40px; height:40px; text-align:center;">LR</div>
+                <div class="bg-success text-white rounded-circle p-2 me-3 fw-bold" style="width:40px; height:40px; text-align:center; line-height: 24px;">LR</div>
                 <div><h6 class="fw-bold mb-0 small">Leandro R.</h6><small class="text-success fw-bold" style="font-size:0.75rem;"><i class="fa-solid fa-circle-check me-1"></i>Arquitecto Cloud</small></div>
             </div>
         </div>
@@ -181,11 +173,6 @@
 </div>
 
 <style>
-    .cat-card:hover {
-        transform: translateY(-4px);
-        border-color: #0d6efd !important;
-    }
-
     .card-product {
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }

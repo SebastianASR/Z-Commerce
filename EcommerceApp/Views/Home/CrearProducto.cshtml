@@ -1,0 +1,43 @@
+﻿@model EcommerceApp.Models.Producto
+@{
+    ViewData["Title"] = "Nuevo Componente";
+}
+
+<div class="container py-5 text-start">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="fw-black mb-4"><i class="fa-solid fa-plus-circle text-success me-2"></i>Ingresar Producto</h2>
+
+            <form asp-action="CrearProducto" method="post" class="card shadow-sm border-0 rounded-4 bg-dark text-white p-4">
+                <div class="row g-4">
+                    <div class="col-md-8">
+                        <label asp-for="Nombre" class="form-label small fw-bold text-secondary">NOMBRE DEL PRODUCTO</label>
+                        <input asp-for="Nombre" class="form-control bg-transparent text-white border-secondary" required />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Precio" class="form-label small fw-bold text-secondary">PRECIO (CLP)</label>
+                        <input asp-for="Precio" type="number" class="form-control bg-transparent text-white border-secondary" required />
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="ImagenUrl" class="form-label small fw-bold text-warning"><i class="fa-solid fa-link me-1"></i>URL DE LA IMAGEN (POSTIMAGES)</label>
+                        <input asp-for="ImagenUrl" class="form-control bg-transparent text-white border-warning" placeholder="Ej: https://i.postimg.cc/m2tRPqgs/Ryzen.png" required />
+                        <div class="form-text text-muted mt-1"><i class="fa-solid fa-circle-info me-1"></i>Sube la foto a <a href="https://postimages.org/" target="_blank" class="text-warning">Postimages</a> y pega aquí el "Direct Link" (debe terminar en .png o .jpg)</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="CategoriaId" class="form-label small fw-bold text-secondary">ID CATEGORÍA</label>
+                        <input asp-for="CategoriaId" type="number" class="form-control bg-transparent text-white border-secondary" required />
+                        <div class="form-text text-muted small">1: CPU | 2: GPU | 3: RAM | 4: Placas/Fuentes</div>
+                    </div>
+                    <div class="col-md-8">
+                        <label asp-for="Descripcion" class="form-label small fw-bold text-secondary">DESCRIPCIÓN COMERCIAL</label>
+                        <textarea asp-for="Descripcion" class="form-control bg-transparent text-white border-secondary" rows="3" required></textarea>
+                    </div>
+                    <div class="col-12 mt-4 text-end">
+                        <a asp-action="GestionProductos" class="btn btn-outline-secondary fw-bold me-2">Cancelar</a>
+                        <button type="submit" class="btn btn-success fw-bold px-4">Guardar en Bodega <i class="fa-solid fa-floppy-disk ms-1"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

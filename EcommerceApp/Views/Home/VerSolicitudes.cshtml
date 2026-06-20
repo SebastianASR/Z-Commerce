@@ -1,0 +1,66 @@
+﻿@model List<EcommerceApp.Models.SolicitudVip>
+
+@{
+    ViewData["Title"] = "Panel de Control";
+}
+
+<div class="container py-5 text-start">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <span class="badge bg-warning text-dark px-3 py-1 fw-bold text-uppercase">Área Restringida</span>
+            <h2 class="fw-black text-dark mt-2 mb-0"><i class="fa-solid fa-sliders text-primary me-2"></i>Panel de Control <span class="text-primary">Z-SEC</span></h2>
+        </div>
+        <span class="badge bg-dark border border-secondary px-3 py-2 text-light font-monospace tracking-wide">Módulo: Enterprise_Leads_V1</span>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-light border text-center py-5 rounded-4 shadow-sm">
+            <i class="fa-solid fa-folder-open fs-1 text-muted mb-3 opacity-50"></i>
+            <h5 class="fw-bold text-muted">No se registran solicitudes en la base de datos</h5>
+            <p class="text-muted small mb-0">Los servidores comerciales están vacíos por ahora.</p>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border rounded-4 overflow-hidden bg-white">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 text-start">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th class="py-3 ps-4">ID</th>
+                            <th class="py-3">Empresa / Partner</th>
+                            <th class="py-3">Contacto Correo</th>
+                            <th class="py-3">Infraestructura Solicitada</th>
+                            <th class="py-3">Detalle Técnico</th>
+                            <th class="py-3 pe-4 text-end">Fecha Registro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var sol in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold text-primary">#@sol.Id</td>
+                                <td class="fw-bold text-dark">@sol.NombreEmpresa</td>
+                                <td>
+                                    <a href="mailto:@sol.Correo" class="text-decoration-none fw-semibold"><i class="fa-solid fa-envelope me-1 text-muted"></i> @sol.Correo</a>
+                                </td>
+                                <td>
+                                    <span class="badge bg-opacity-10 bg-primary text-primary border border-primary border-opacity-25 px-2 py-1 small fw-bold">
+                                        @sol.TipoProyecto
+                                    </span>
+                                </td>
+                                <td class="text-muted small text-truncate" style="max-width: 250px;" title="@sol.Detalles">
+                                    @sol.Detalles
+                                </td>
+                                <td class="text-end pe-4 text-muted small">
+                                    @sol.FechaSolicitud.ToLocalTime().ToString("dd/MM/yyyy HH:mm")
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

@@ -1,40 +1,47 @@
-﻿@model IEnumerable<EcommerceApp.Models.Producto>
+﻿@model List<EcommerceApp.Models.CarritoItem>
 
 @{
-    int sumaTotal = Model.Sum(p => p.Precio);
+    int subtotalSuma = Model.Sum(x => x.Subtotal);
 }
 
 @if (!Model.Any())
 {
-    <div class="text-center my-auto py-5 opacity-50">
-        <i class="fa-solid fa-box-open border p-4 rounded-circle fs-2 mb-3"></i>
-        <h6 class="fw-bold">Tu bolsa está vacía</h6>
-        <p class="small text-muted mb-0">Agrega hardware de la vitrina para comenzar.</p>
+    <div class="text-center py-5 text-muted">
+        <i class="fa-solid fa-cart-shopping fs-1 mb-3 opacity-50"></i>
+        <p class="mb-0">Tu bolsa está vacía</p>
     </div>
 }
 else
 {
-    <div class="flex-grow-1 overflow-y-auto pe-2">
+    <div class="list-group list-group-flush mb-4 text-start">
         @foreach (var item in Model)
         {
-            <div class="d-flex align-items-center py-3 border-bottom border-secondary border-opacity-50">
-                <img src="@item.ImagenUrl" class="rounded-3 object-fit-cover me-3" style="width: 55px; height: 55px;" alt="@item.Nombre">
-                <div class="flex-grow-1 min-w-0 text-start">
-                    <h6 class="fw-bold mb-0 text-truncate text-light small">@item.Nombre</h6>
-                    <span class="text-primary fw-bold small">$ @item.Precio.ToString("N0")</span>
+            <div class="list-group-item bg-transparent text-white px-0 py-3 border-bottom border-secondary d-flex align-items-center">
+                <img src="@item.Producto.ImagenUrl" class="rounded-2 object-fit-cover me-3" style="width: 50px; height: 50px;">
+
+                <div class="flex-grow-1">
+                    <h6 class="fw-bold mb-1 text-light" style="font-size: 0.9rem;">@item.Producto.Nombre</h6>
+                    <div class="d-flex align-items-center">
+                        <span class="text-primary fw-bold small">$ @item.Producto.Precio.ToString("N0")</span>
+                        <span class="badge bg-secondary text-light ms-2">x@(item.Cantidad)</span>
+                    </div>
+                </div>
+
+                <div class="ms-3 text-end">
+                    <span class="fw-black text-white small">$ @item.Subtotal.ToString("N0")</span>
                 </div>
             </div>
         }
     </div>
 
-    <div class="pt-3 border-top border-secondary mt-auto">
+    <div class="mt-auto pt-3 border-top border-secondary">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-secondary small fw-bold">SUBTOTAL:</span>
-            <h4 class="text-success fw-black mb-0">$ @sumaTotal.ToString("N0") CLP</h4>
+            <span class="text-muted small fw-bold">SUBTOTAL:</span>
+            <h5 class="text-success fw-black mb-0">$ @subtotalSuma.ToString("N0") CLP</h5>
         </div>
 
-        <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary w-100 btn-lg fw-bold shadow">
-            Ir a Finalizar Compra <i class="fa-solid fa-lock ms-2"></i>
+        <a asp-controller="Home" asp-action="VerCarrito" class="btn btn-primary w-100 fw-bold py-2 shadow-sm">
+            Ir a Finalizar Compra <i class="fa-solid fa-arrow-right ms-1"></i>
         </a>
     </div>
 }

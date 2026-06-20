@@ -1,0 +1,65 @@
+﻿@model EcommerceApp.Models.SolicitudVip
+
+@{
+    ViewData["Title"] = "Asesoría VIP Empresarial";
+}
+
+<div class="container py-5 text-start">
+    <div class="row align-items-center mb-5">
+        <div class="col-lg-7">
+            <span class="badge bg-primary px-3 py-2 text-uppercase mb-3 fw-bold shadow-sm">Z-Commerce Enterprise</span>
+            <h1 class="display-5 fw-black text-dark tracking-tight">Soluciones de hardware para <span class="text-primary">Alta Exigencia</span></h1>
+            <p class="text-muted fs-5 mt-3">Diseñamos, ensamblamos y configuramos clústeres para Deep Learning, servidores de bases de datos y estaciones de trabajo para renderizado 3D y edición pesada.</p>
+        </div>
+        <div class="col-lg-5 text-center d-none d-lg-block">
+            <i class="fa-solid fa-server text-primary opacity-50" style="font-size: 12rem;"></i>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-lg border-0 rounded-4 bg-dark text-white p-4 p-md-5">
+                <h3 class="fw-bold mb-4 border-bottom border-secondary pb-3"><i class="fa-solid fa-envelope-open-text me-2 text-primary"></i> Contacto Comercial</h3>
+
+                @if (TempData["MensajeExito"] != null)
+                {
+                    <div class="alert alert-success fw-bold border-0 shadow-sm rounded-3">
+                        <i class="fa-solid fa-circle-check me-2"></i> @TempData["MensajeExito"]
+                    </div>
+                }
+
+                <form asp-action="AsesoriaVip" method="post">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label asp-for="NombreEmpresa" class="form-label small fw-bold text-secondary">NOMBRE O EMPRESA</label>
+                            <input asp-for="NombreEmpresa" type="text" class="form-control bg-transparent text-white border-secondary py-2" placeholder="Ej: Tech Solutions SpA" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Correo" class="form-label small fw-bold text-secondary">CORREO CORPORATIVO</label>
+                            <input asp-for="Correo" type="email" class="form-control bg-transparent text-white border-secondary py-2" placeholder="contacto@empresa.cl" required>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="TipoProyecto" class="form-label small fw-bold text-secondary">TIPO DE PROYECTO</label>
+                            <select asp-for="TipoProyecto" class="form-select bg-transparent text-white border-secondary py-2" required>
+                                <option class="text-dark" value="Nodos Deep Learning / IA">Nodos Deep Learning / Inteligencia Artificial</option>
+                                <option class="text-dark" value="Servidores de Base de Datos">Servidores de Base de Datos (SQL/PostgreSQL)</option>
+                                <option class="text-dark" value="Workstations Renderizado">Workstations para Renderizado 3D</option>
+                                <option class="text-dark" value="Otro">Otro equipamiento de alto rendimiento</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Detalles" class="form-label small fw-bold text-secondary">DETALLES DEL REQUERIMIENTO</label>
+                            <textarea asp-for="Detalles" class="form-control bg-transparent text-white border-secondary" rows="4" placeholder="Cuéntanos sobre tu presupuesto, plazos y requerimientos técnicos específicos..." required></textarea>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow">
+                                Enviar Solicitud a Ingeniería <i class="fa-solid fa-paper-plane ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

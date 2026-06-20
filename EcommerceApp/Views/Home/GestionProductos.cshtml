@@ -1,0 +1,58 @@
+﻿@model List<EcommerceApp.Models.Producto>
+
+@{
+    ViewData["Title"] = "Gestión de Inventario";
+}
+
+<div class="container py-5 text-start">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <span class="badge bg-success text-dark px-3 py-1 fw-bold text-uppercase">Equipo Administrativo</span>
+            <h2 class="fw-black text-dark mt-2 mb-0"><i class="fa-solid fa-boxes-stacked text-success me-2"></i>Inventario <span class="text-success">Central</span></h2>
+        </div>
+        <a asp-action="CrearProducto" class="btn btn-success fw-bold shadow-sm">
+            <i class="fa-solid fa-plus me-1"></i> Agregar Componente
+        </a>
+    </div>
+
+    <div class="card shadow-sm border rounded-4 overflow-hidden bg-white">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 text-start">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <th class="py-3 ps-4">ID</th>
+                        <th class="py-3">Imagen</th>
+                        <th class="py-3">Nombre del Componente</th>
+                        <th class="py-3">Categoría</th>
+                        <th class="py-3 text-center">Precio</th>
+                        <th class="py-3 pe-4 text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold text-muted">@p.Id</td>
+                            <td>
+                                <img src="@p.ImagenUrl" class="rounded-2 border object-fit-cover" style="width: 50px; height: 50px;">
+                            </td>
+                            <td class="fw-bold text-dark">@p.Nombre</td>
+                            <td><span class="badge bg-secondary">CAT-@p.CategoriaId</span></td>
+                            <td class="text-center fw-black text-dark">$ @p.Precio.ToString("N0")</td>
+                            <td class="text-end pe-4">
+                                <a asp-action="EditarProducto" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary fw-bold me-1">
+                                    <i class="fa-solid fa-pen"></i> Editar
+                                </a>
+                                <form asp-action="EliminarProducto" asp-route-id="@p.Id" method="post" class="d-inline" onsubmit="return confirm('¿Seguro que quieres borrar este componente de la base de datos?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger fw-bold">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
