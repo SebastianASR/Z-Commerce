@@ -34,7 +34,7 @@
                         <h4 class="text-primary fw-bold">$ @producto.Precio.ToString("N0")</h4>
                     </div>
                     <div class="card-footer bg-white border-top-0 pb-3">
-                        <button class="btn btn-outline-dark w-100 fw-bold">Agregar al Carrito</button>
+                        <a asp-controller="Home" asp-action="AgregarAlCarrito" asp-route-id="@producto.Id" class="btn btn-outline-dark w-100 fw-bold">Agregar al Carrito</a>
                     </div>
                 </div>
             </div>

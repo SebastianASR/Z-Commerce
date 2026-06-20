@@ -1,0 +1,54 @@
+﻿@model IEnumerable<EcommerceApp.Models.Producto>
+
+@{
+    ViewData["Title"] = "Mi Carrito";
+    // Magia de C#: Suma automáticamente la propiedad 'Precio' de todos los objetos en la lista
+    int sumaTotal = Model.Sum(p => p.Precio);
+}
+
+<div class="container mt-5 text-start">
+    <h1 class="fw-bold mb-4">Carro de Compras</h1>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center fs-5 py-5 shadow-sm" role="alert">
+            Tu carrito está más vacío que mi billetera a fin de mes. 🥲 <br />
+            <a asp-action="Index" class="btn btn-dark mt-3 fw-bold">Volver al catálogo</a>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Producto</th>
+                            <th class="text-end">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-bold fs-5">@item.Nombre</td>
+                                <td class="text-primary fw-bold text-end fs-5">$ @item.Precio.ToString("N0")</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td class="text-end fw-bold fs-5">TOTAL A PAGAR:</td>
+                            <td class="text-success fw-bold text-end fs-4">$ @sumaTotal.ToString("N0") CLP</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="text-end mt-4">
+            <a asp-action="Index" class="btn btn-outline-dark btn-lg me-2 fw-bold">Seguir Comprando</a>
+            <button class="btn btn-primary btn-lg fw-bold">Pagar Ahora</button>
+        </div>
+    }
+</div>
