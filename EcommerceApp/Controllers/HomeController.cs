@@ -14,36 +14,25 @@ namespace EcommerceApp.Controllers
             _logger = logger;
         }
 
-        // 1. SACAMOS LA BASE DE DATOS AFUERA (Ahora cualquier método de este archivo puede leerla)
         private List<Producto> ObtenerBaseDeDatos()
         {
             return new List<Producto>
             {
-                new Producto { Id = 1, Nombre = "Procesador Server-X Pro", Descripcion = "Máxima potencia para bases de datos y virtualización con excelente gestión térmica.", Precio = 349990, ImagenUrl = "https://placehold.co/400x250/212529/FFFFFF?text=Procesador+Server-X" },
-                new Producto { Id = 2, Nombre = "Kit Memoria RAM 32GB", Descripcion = "Velocidad extrema y baja latencia, ideal para cargas de trabajo pesadas y gaming.", Precio = 129990, ImagenUrl = "https://placehold.co/400x250/212529/FFFFFF?text=Memoria+RAM+32GB" },
-                new Producto { Id = 3, Nombre = "Compuesto Térmico Pro-Cool", Descripcion = "Conductividad superior para mantener tu hardware al máximo rendimiento sin sobrecalentamiento.", Precio = 14990, ImagenUrl = "https://placehold.co/400x250/212529/FFFFFF?text=Pasta+Termica" }
+                new Producto { Id = 1, Nombre = "Procesador Server-X Pro", Descripcion = "Máxima potencia para bases de datos y virtualización con excelente gestión térmica.", Precio = 349990, ImagenUrl = "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=600&auto=format&fit=crop&q=60" },
+                new Producto { Id = 2, Nombre = "Kit Memoria RAM 32GB", Descripcion = "Velocidad extrema y baja latencia, ideal para cargas de trabajo pesadas y gaming.", Precio = 129990, ImagenUrl = "https://images.unsplash.com/photo-1562976540-1502c2145186?w=600&auto=format&fit=crop&q=60" },
+                new Producto { Id = 3, Nombre = "Compuesto Térmico Pro-Cool", Descripcion = "Conductividad superior para mantener tu hardware al máximo rendimiento sin sobrecalentamiento.", Precio = 14990, ImagenUrl = "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600&auto=format&fit=crop&q=60" }
             };
         }
 
         public IActionResult Index()
         {
-            // El index ahora simplemente llama a la base de datos de arriba
             return View(ObtenerBaseDeDatos());
         }
 
         public IActionResult AgregarAlCarrito(int id)
         {
             string? carritoBolsa = HttpContext.Session.GetString("MiBolsa");
-            List<int> listaIds;
-
-            if (string.IsNullOrEmpty(carritoBolsa))
-            {
-                listaIds = new List<int>();
-            }
-            else
-            {
-                listaIds = JsonSerializer.Deserialize<List<int>>(carritoBolsa)!;
-            }
+            List<int> listaIds = string.IsNullOrEmpty(carritoBolsa) ? new List<int>() : JsonSerializer.Deserialize<List<int>>(carritoBolsa)!;
 
             listaIds.Add(id);
             HttpContext.Session.SetString("MiBolsa", JsonSerializer.Serialize(listaIds));
@@ -51,7 +40,6 @@ namespace EcommerceApp.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- NUEVO: EL MÉTODO QUE ABRE LA BOLSA ---
         public IActionResult VerCarrito()
         {
             string? carritoBolsa = HttpContext.Session.GetString("MiBolsa");
@@ -64,18 +52,37 @@ namespace EcommerceApp.Controllers
 
                 foreach (var id in idsGuardados)
                 {
-                    // LINQ: "Busca en la base de datos el primer producto que coincida con este ID"
                     var productoReal = baseDeDatos.FirstOrDefault(p => p.Id == id);
-                    if (productoReal != null)
-                    {
-                        productosEnCarrito.Add(productoReal);
-                    }
+                    if (productoReal != null) productosEnCarrito.Add(productoReal);
                 }
             }
 
             return View(productosEnCarrito);
         }
-        // ------------------------------------------
+
+        // --- NUEVO: ENDPOINT ASÍNCRONO PARA EL CAJÓN LATERAL ---
+        public IActionResult GetCarritoOffcanvas(int? idProducto)
+        {
+            string? carritoBolsa = HttpContext.Session.GetString("MiBolsa");
+            List<int> listaIds = string.IsNullOrEmpty(carritoBolsa) ? new List<int>() : JsonSerializer.Deserialize<List<int>>(carritoBolsa)!;
+
+            if (idProducto.HasValue)
+            {
+                listaIds.Add(idProducto.Value);
+                HttpContext.Session.SetString("MiBolsa", JsonSerializer.Serialize(listaIds));
+            }
+
+            var baseDeDatos = ObtenerBaseDeDatos();
+            var productosEnCarrito = new List<Producto>();
+
+            foreach (var id in listaIds)
+            {
+                var prod = baseDeDatos.FirstOrDefault(p => p.Id == id);
+                if (prod != null) productosEnCarrito.Add(prod);
+            }
+
+            return PartialView("_CarritoLateral", productosEnCarrito);
+        }
 
         public IActionResult Privacy() { return View(); }
 

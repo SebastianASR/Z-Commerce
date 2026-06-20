@@ -1,52 +1,100 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EcommerceApp</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - Z-Commerce</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/EcommerceApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
+<body class="bg-light text-dark">
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EcommerceApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary shadow-sm">
+            <div class="container">
+
+                <a class="navbar-brand fw-bold tracking-wide" asp-controller="Home" asp-action="Index">
+                    <span class="text-primary"><i class="fa-solid fa-microchip me-2"></i>Z</span>-COMMERCE
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-controller="Home" asp-action="Index">
+                                <i class="fa-solid fa-layer-group me-1"></i> Catálogo
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-primary fw-bold" asp-controller="Home" asp-action="VerCarrito">
-                                🛒 Ver Carrito
+                            <a class="nav-link text-light" asp-controller="Home" asp-action="Privacy">
+                                <i class="fa-solid fa-shield-halved me-1"></i> Garantía y Seguridad
                             </a>
                         </li>
                     </ul>
+
+                    <div class="d-flex align-items-center gap-3">
+
+                        <a href="javascript:void(0)" onclick="abrirCarritoLateral()" class="btn btn-outline-primary fw-bold position-relative">
+                            <i class="fa-solid fa-cart-shopping me-1"></i> Carrito
+                        </a>
+
+                        <div class="vr text-light my-2"></div>
+
+                        <a href="#" class="btn btn-link text-light text-decoration-none fw-bold">
+                            <i class="fa-solid fa-user me-1"></i> Iniciar Sesión
+                        </a>
+                        <a href="#" class="btn btn-primary fw-bold">
+                            Registrarse
+                        </a>
+                    </div>
                 </div>
+
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container my-4">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - EcommerceApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="offcanvas offcanvas-end bg-dark text-light border-start border-secondary shadow-lg"
+         tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel" style="width: 580px; max-width: 95vw;">
+
+        <div class="offcanvas-header border-bottom border-secondary">
+            <h5 class="offcanvas-title fw-bold tracking-wide" id="offcanvasCarritoLabel">
+                <i class="fa-solid fa-cart-shopping text-primary me-2"></i>TU BOLSA
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body d-flex flex-column" id="contenedor-carrito-offcanvas">
+            <div class="text-center py-5 text-muted">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2 small">Cargando tu armamento...</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-secondary border-top border-secondary py-4 mt-5">
+        <div class="container text-center text-md-start">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-2 mb-md-0">
+                    <span class="fw-bold text-light">Z-COMMERCE</span> &copy; 2026 — Hardware de Alto Rendimiento.
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <span class="badge bg-secondary text-light me-2"><i class="fa-solid fa-lock me-1"></i> SSL Secure</span>
+                    <span class="badge bg-primary"><i class="fa-solid fa-server me-1"></i> Node: CL-STGO-01</span>
+                </div>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<EcommerceApp.Models.Producto>
+
+@{
+    int sumaTotal = Model.Sum(p => p.Precio);
+}
+
+@if (!Model.Any())
+{
+    <div class="text-center my-auto py-5 opacity-50">
+        <i class="fa-solid fa-box-open border p-4 rounded-circle fs-2 mb-3"></i>
+        <h6 class="fw-bold">Tu bolsa está vacía</h6>
+        <p class="small text-muted mb-0">Agrega hardware de la vitrina para comenzar.</p>
+    </div>
+}
+else
+{
+    <div class="flex-grow-1 overflow-y-auto pe-2">
+        @foreach (var item in Model)
+        {
+            <div class="d-flex align-items-center py-3 border-bottom border-secondary border-opacity-50">
+                <img src="@item.ImagenUrl" class="rounded-3 object-fit-cover me-3" style="width: 55px; height: 55px;" alt="@item.Nombre">
+                <div class="flex-grow-1 min-w-0 text-start">
+                    <h6 class="fw-bold mb-0 text-truncate text-light small">@item.Nombre</h6>
+                    <span class="text-primary fw-bold small">$ @item.Precio.ToString("N0")</span>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="pt-3 border-top border-secondary mt-auto">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-secondary small fw-bold">SUBTOTAL:</span>
+            <h4 class="text-success fw-black mb-0">$ @sumaTotal.ToString("N0") CLP</h4>
+        </div>
+
+        <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary w-100 btn-lg fw-bold shadow">
+            Ir a Finalizar Compra <i class="fa-solid fa-lock ms-2"></i>
+        </a>
+    </div>
+}

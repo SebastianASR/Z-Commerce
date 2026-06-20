@@ -4,41 +4,136 @@
     ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <!-- Sección Principal (Hero) -->
-    <div class="p-5 mb-4 bg-dark text-white rounded-3 shadow">
-        <div class="container-fluid py-5">
-            <h1 class="display-4 fw-bold">Bienvenido a Z-Commerce</h1>
-            <p class="col-md-8 mx-auto fs-5 mt-3">
-                Tu tienda de confianza para componentes de hardware, servidores y periféricos de alto rendimiento.
-            </p>
-            <a href="#" class="btn btn-primary btn-lg mt-3 fw-bold">Explorar Catálogo</a>
+<div class="position-relative overflow-hidden p-5 mb-5 rounded-4 shadow-lg text-white"
+     style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 1px solid #334155;">
+
+    <div class="container-fluid py-4 text-start position-relative z-1">
+        <span class="badge bg-primary px-3 py-2 text-uppercase tracking-wider mb-3 fw-bold shadow-sm">
+            <i class="fa-solid fa-bolt me-1"></i> Stock de Alta Gama 2026
+        </span>
+
+        <h1 class="display-4 fw-extrabold text-white tracking-tight">
+            Potencia bruta para tu <span class="text-primary">Setup.</span>
+        </h1>
+
+        <p class="col-md-8 fs-5 mt-3 text-light opacity-75">
+            Componentes de grado servidor, memorias de ultra-baja latencia y periféricos diseñados para llevar tu hardware al límite.
+        </p>
+
+        <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#catalogo" class="btn btn-primary btn-lg fw-bold px-4 py-3 shadow">
+                Explorar Catálogo <i class="fa-solid fa-arrow-right ms-2"></i>
+            </a>
+            <a asp-action="Privacy" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 opacity-75">
+                <i class="fa-solid fa-shield-halved me-2"></i>Nuestra Garantía
+            </a>
         </div>
     </div>
 
-    <!-- Sección de Productos Destacados -->
-    <h2 class="mt-5 mb-4 fw-bold text-start">Productos Destacados</h2>
-
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-
-        <!-- BUCLE MÁGICO: Aquí C# crea una tarjeta por cada producto en tu "base de datos" -->
-        @foreach (var producto in Model)
-        {
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="@producto.ImagenUrl" class="card-img-top rounded-top" alt="@producto.Nombre">
-                    <div class="card-body text-start">
-                        <h5 class="card-title fw-bold">@producto.Nombre</h5>
-                        <p class="card-text text-muted">@producto.Descripcion</p>
-                        <!-- Le damos formato al número para que le ponga el punto de los miles (ej: 349.990) -->
-                        <h4 class="text-primary fw-bold">$ @producto.Precio.ToString("N0")</h4>
-                    </div>
-                    <div class="card-footer bg-white border-top-0 pb-3">
-                        <a asp-controller="Home" asp-action="AgregarAlCarrito" asp-route-id="@producto.Id" class="btn btn-outline-dark w-100 fw-bold">Agregar al Carrito</a>
-                    </div>
-                </div>
-            </div>
-        }
-
+    <div class="position-absolute top-0 end-0 translate-middle-y opacity-10 pe-none d-none d-md-block"
+         style="font-size: 28rem; color: #38bdf8; right: -5% !important; user-select: none;">
+        <i class="fa-solid fa-microchip"></i>
     </div>
 </div>
+
+<div class="row g-4 mb-5 text-start">
+    <div class="col-md-4">
+        <div class="d-flex align-items-center p-3 bg-white rounded-4 border shadow-sm h-100">
+            <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3 me-3 fs-3">
+                <i class="fa-solid fa-truck-fast"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-1">Despacho Todo Chile</h6>
+                <small class="text-muted">Envíos asegurados vía Starken y Chilexpress</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="d-flex align-items-center p-3 bg-white rounded-4 border shadow-sm h-100">
+            <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3 me-3 fs-3">
+                <i class="fa-solid fa-rotate-left"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-1">Garantía Incondicional</h6>
+                <small class="text-muted">30 días de cambio directo por falla de fábrica</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="d-flex align-items-center p-3 bg-white rounded-4 border shadow-sm h-100">
+            <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3 me-3 fs-3">
+                <i class="fa-solid fa-headset"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-1">Soporte Técnico VIP</h6>
+                <small class="text-muted">Asesoría de compatibilidad de hardware 24/7</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="catalogo" class="d-flex justify-content-between align-items-end mb-4 mt-5">
+    <h3 class="fw-bold mb-0 text-start">Productos Destacados</h3>
+    <span class="text-muted small"><i class="fa-solid fa-circle text-success small me-1"></i> Precios actualizados hoy</span>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-5 text-start">
+    @foreach (var producto in Model)
+    {
+        int precioNormal = (int)(producto.Precio * 1.18);
+
+        <div class="col">
+            <div class="card h-100 shadow-sm border rounded-4 overflow-hidden card-product transition-all">
+
+                <div class="position-relative bg-dark">
+                    <span class="position-absolute top-0 end-0 m-3 badge bg-success fw-bold z-1 shadow-sm">
+                        En Stock
+                    </span>
+                    <img src="@producto.ImagenUrl" class="card-img-top object-fit-cover" alt="@producto.Nombre" style="height: 220px;">
+                </div>
+
+                <div class="card-body d-flex flex-column p-4">
+                    <small class="text-primary fw-bold tracking-widest text-uppercase small">SKU: ZC-100@producto.Id</small>
+
+                    <h5 class="card-title fw-bold mt-1 mb-2">@producto.Nombre</h5>
+
+                    <p class="card-text text-muted small flex-grow-1">@producto.Descripcion</p>
+
+                    <div class="mt-3 pt-3 border-top d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted text-decoration-line-through d-block" style="font-size: 0.8rem;">
+                                $ @precioNormal.ToString("N0")
+                            </small>
+                            <h4 class="text-dark fw-black mb-0">$ @producto.Precio.ToString("N0")</h4>
+                        </div>
+
+                        <button type="button" onclick="abrirCarritoLateral(@producto.Id)"
+                                class="btn btn-primary fw-bold px-3 py-2 shadow-sm btn-agregar">
+                            <i class="fa-solid fa-cart-plus me-1"></i> Agregar
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .card-product {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .card-product:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12) !important;
+        }
+
+    .btn-agregar {
+        transition: transform 0.1s ease;
+    }
+
+        .btn-agregar:active {
+            transform: scale(0.95);
+        }
+</style>
