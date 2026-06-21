@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+
+.git
+.github
+.vs
+.vscode
+
+EcommerceApp/appsettings.json
+EcommerceApp/appsettings.Development.json
+
+*.user
+*.suo
