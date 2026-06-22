@@ -135,6 +135,23 @@ namespace EcommerceApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public IActionResult AgregarUnidadCarrito(int id)
+        {
+            List<int> listaIds = ObtenerIdsCarrito();
+
+            var productoExiste = _context.Productos.Any(p => p.Id == id);
+
+            if (productoExiste)
+            {
+                listaIds.Add(id);
+                GuardarIdsCarrito(listaIds);
+            }
+
+            return PartialView("_CarritoLateral", ObtenerBolsaAgrupada(listaIds));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult QuitarUnidadCarrito(int id)
         {
             List<int> listaIds = ObtenerIdsCarrito();
@@ -178,6 +195,7 @@ namespace EcommerceApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AsesoriaVip(SolicitudVip modelo)
         {
             if (ModelState.IsValid)
@@ -193,7 +211,7 @@ namespace EcommerceApp.Controllers
             return View(modelo);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,DemoAdmin")]
         public IActionResult VerSolicitudes()
         {
             var lista = _context.SolicitudesVip.OrderByDescending(x => x.FechaSolicitud).ToList();
@@ -201,7 +219,7 @@ namespace EcommerceApp.Controllers
         }
 
         // --- MÓDULO DE INVENTARIO (CRUD DE PRODUCTOS) ---
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,DemoAdmin")]
         public IActionResult GestionProductos()
         {
             var productos = _context.Productos.OrderByDescending(p => p.Id).ToList();
@@ -217,6 +235,7 @@ namespace EcommerceApp.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CrearProducto(Producto modelo)
         {
             if (ModelState.IsValid)
@@ -243,6 +262,7 @@ namespace EcommerceApp.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditarProducto(Producto modelo)
         {
             if (ModelState.IsValid)
@@ -257,6 +277,7 @@ namespace EcommerceApp.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EliminarProducto(int id)
         {
             var producto = _context.Productos.Find(id);

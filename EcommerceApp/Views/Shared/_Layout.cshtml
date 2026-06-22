@@ -26,7 +26,6 @@
             letter-spacing: 0.05em;
         }
 
-       
         .epic-logo span {
             display: inline-block;
             font-weight: 900;
@@ -66,7 +65,6 @@
             color: #0d6efd !important;
         }
 
-      
         .btn-register-premium {
             background: rgba(13, 110, 253, 0.15);
             border: 1px solid rgba(13, 110, 253, 0.5);
@@ -100,6 +98,7 @@
             }
     </style>
 </head>
+
 <body class="bg-light text-dark d-flex flex-column min-vh-100">
 
     <header>
@@ -130,6 +129,7 @@
                                 <i class="fa-solid fa-layer-group me-1 opacity-75"></i> Catálogo
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-light fw-medium small text-uppercase tracking-wide text-nowrap" asp-controller="Home" asp-action="Privacy">
                                 <i class="fa-solid fa-shield-halved me-1 opacity-75"></i> Garantía y Seguridad
@@ -141,6 +141,7 @@
 
                         <a href="javascript:void(0)" onclick="abrirCarritoLateral(null)" class="btn btn-outline-primary fw-bold px-4 rounded-3 position-relative d-flex align-items-center justify-content-center w-100 w-lg-auto">
                             <i class="fa-solid fa-cart-shopping me-2"></i> Carrito
+
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-dark shadow animate-bounce" id="badgeCartCount" style="display:none; font-size: 0.75rem;">
                                 0
                             </span>
@@ -152,24 +153,42 @@
                         {
                             <div class="dropdown w-100 w-lg-auto">
                                 <button class="btn btn-dark border border-secondary border-opacity-50 text-light fw-bold dropdown-toggle rounded-3 w-100 text-start text-lg-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-user-circle text-primary me-2 fs-5 align-middle"></i>@User.Identity?.Name
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg border-secondary border-opacity-50 mt-2 p-2 rounded-3 animate-fadeIn">
-                                    @if (User.IsInRole("Admin"))
+                                    <i class="fa-solid fa-user-circle text-primary me-2 fs-5 align-middle"></i>
+                                    @User.Identity?.Name
+
+                                    @if (User.IsInRole("DemoAdmin"))
                                     {
-                                        <div class="dropdown-header text-uppercase tracking-wider small fw-bold text-primary opacity-75 pb-1">Gestión Enterprise</div>
+                                        <span class="badge bg-warning text-dark ms-2">DEMO</span>
+                                    }
+                                    else if (User.IsInRole("Admin"))
+                                    {
+                                        <span class="badge bg-success text-dark ms-2">ADMIN</span>
+                                    }
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow-lg border-secondary border-opacity-50 mt-2 p-2 rounded-3 animate-fadeIn">
+
+                                    @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin"))
+                                    {
+                                        <div class="dropdown-header text-uppercase tracking-wider small fw-bold text-primary opacity-75 pb-1">
+                                            @(User.IsInRole("DemoAdmin") ? "Modo Demo" : "Gestión Enterprise")
+                                        </div>
+
                                         <li>
                                             <a class="dropdown-item fw-semibold text-warning rounded-2 py-2" asp-controller="Home" asp-action="VerSolicitudes">
                                                 <i class="fa-solid fa-envelope-open-text me-2"></i>Leads / Solicitudes
                                             </a>
                                         </li>
+
                                         <li>
                                             <a class="dropdown-item fw-semibold text-success rounded-2 py-2" asp-controller="Home" asp-action="GestionProductos">
                                                 <i class="fa-solid fa-boxes-stacked me-2"></i>Gestión de Inventario
                                             </a>
                                         </li>
+
                                         <li><hr class="dropdown-divider border-secondary border-opacity-50 my-2"></li>
                                     }
+
                                     <li>
                                         <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
                                             <button type="submit" class="dropdown-item fw-bold text-danger rounded-2 py-2">
@@ -177,6 +196,7 @@
                                             </button>
                                         </form>
                                     </li>
+
                                 </ul>
                             </div>
                         }
@@ -185,6 +205,7 @@
                             <a asp-controller="Account" asp-action="Login" class="btn btn-link text-light text-decoration-none fw-bold small text-uppercase tracking-wide w-100 w-lg-auto text-center text-nowrap btn-login-hover">
                                 <i class="fa-solid fa-lock text-secondary me-2 opacity-75"></i>Ingresar
                             </a>
+
                             <a asp-controller="Account" asp-action="Register" class="btn btn-register-premium fw-bold px-4 rounded-3 w-100 w-lg-auto text-nowrap">
                                 <i class="fa-solid fa-user-plus me-2 opacity-75"></i>Registrarse
                             </a>
@@ -209,6 +230,7 @@
             <h5 class="offcanvas-title fw-black tracking-wide text-uppercase text-primary d-flex align-items-center" id="offcanvasCarritoLabel">
                 <i class="fa-solid fa-cart-shopping me-2"></i> Tu Carrito
             </h5>
+
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
@@ -237,6 +259,7 @@
                     <div class="text-light fw-bold small mb-1 tracking-wide">
                         Z-COMMERCE &copy; 2026 — Arquitectura de Sistemas Distribuidos.
                     </div>
+
                     <div class="small" style="font-size: 0.8rem;">
                         <i class="fa-solid fa-code text-primary me-2"></i>Full-Stack Developer:
                         <a href="https://github.com/SebastianASR" target="_blank" rel="noopener noreferrer" class="text-white fw-bold text-decoration-none ms-1 hover-underline">
@@ -246,9 +269,17 @@
                 </div>
 
                 <div class="col-md-6 text-center text-md-end d-flex flex-wrap gap-2 justify-content-center justify-content-md-end">
-                    <span class="badge bg-black bg-opacity-50 border border-secondary border-opacity-25 text-light px-2 py-1-5 font-monospace" style="font-size: 0.7rem;"><i class="fa-solid fa-server text-success me-1"></i> NEON_POSTGRESQL</span>
-                    <span class="badge bg-black bg-opacity-50 border border-secondary border-opacity-25 text-light px-2 py-1-5 font-monospace" style="font-size: 0.7rem;"><i class="fa-solid fa-credit-card text-info me-1"></i> WEBPAY_API_V1.2</span>
-                    <span class="badge bg-primary text-dark fw-bold px-2 py-1-5 font-monospace" style="font-size: 0.7rem;"><i class="fa-solid fa-lock me-1"></i> SSL_SECURE</span>
+                    <span class="badge bg-black bg-opacity-50 border border-secondary border-opacity-25 text-light px-2 py-1-5 font-monospace" style="font-size: 0.7rem;">
+                        <i class="fa-solid fa-server text-success me-1"></i> NEON_POSTGRESQL
+                    </span>
+
+                    <span class="badge bg-black bg-opacity-50 border border-secondary border-opacity-25 text-light px-2 py-1-5 font-monospace" style="font-size: 0.7rem;">
+                        <i class="fa-solid fa-credit-card text-info me-1"></i> WEBPAY_API_V1.2
+                    </span>
+
+                    <span class="badge bg-primary text-dark fw-bold px-2 py-1-5 font-monospace" style="font-size: 0.7rem;">
+                        <i class="fa-solid fa-lock me-1"></i> SSL_SECURE
+                    </span>
                 </div>
 
             </div>

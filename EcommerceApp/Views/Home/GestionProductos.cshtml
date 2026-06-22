@@ -2,17 +2,51 @@
 
 @{
     ViewData["Title"] = "Gestión de Inventario";
+    bool esDemoAdmin = User.IsInRole("DemoAdmin");
+    bool esAdminReal = User.IsInRole("Admin");
 }
 
 <div class="container py-5 text-start">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <span class="badge bg-success text-dark px-3 py-1 fw-bold text-uppercase">Equipo Administrativo</span>
-            <h2 class="fw-black text-dark mt-2 mb-0"><i class="fa-solid fa-boxes-stacked text-success me-2"></i>Inventario <span class="text-success">Central</span></h2>
+            @if (esDemoAdmin)
+            {
+                <span class="badge bg-warning text-dark px-3 py-1 fw-bold text-uppercase">
+                    Modo Demostración
+                </span>
+            }
+            else
+            {
+                <span class="badge bg-success text-dark px-3 py-1 fw-bold text-uppercase">
+                    Equipo Administrativo
+                </span>
+            }
+
+            <h2 class="fw-black text-dark mt-2 mb-0">
+                <i class="fa-solid fa-boxes-stacked text-success me-2"></i>
+                Inventario <span class="text-success">Central</span>
+            </h2>
+
+            @if (esDemoAdmin)
+            {
+                <p class="text-muted small mt-2 mb-0">
+                    Estás visualizando el panel como usuario demo. Las acciones de creación, edición y eliminación están restringidas para proteger la base pública.
+                </p>
+            }
         </div>
-        <a asp-action="CrearProducto" class="btn btn-success fw-bold shadow-sm">
-            <i class="fa-solid fa-plus me-1"></i> Agregar Componente
-        </a>
+
+        @if (esAdminReal)
+        {
+            <a asp-action="CrearProducto" class="btn btn-success fw-bold shadow-sm">
+                <i class="fa-solid fa-plus me-1"></i> Agregar Componente
+            </a>
+        }
+        else
+        {
+            <button type="button" class="btn btn-outline-secondary fw-bold shadow-sm" disabled>
+                <i class="fa-solid fa-lock me-1"></i> Agregar bloqueado en demo
+            </button>
+        }
     </div>
 
     <div class="card shadow-sm border rounded-4 overflow-hidden bg-white">
@@ -34,20 +68,34 @@
                         <tr>
                             <td class="ps-4 fw-bold text-muted">@p.Id</td>
                             <td>
-                                <img src="@p.ImagenUrl" class="rounded-2 border object-fit-cover" style="width: 50px; height: 50px;">
+                                <img src="@p.ImagenUrl" class="rounded-2 border object-fit-cover" style="width: 50px; height: 50px;" alt="@p.Nombre">
                             </td>
                             <td class="fw-bold text-dark">@p.Nombre</td>
                             <td><span class="badge bg-secondary">CAT-@p.CategoriaId</span></td>
                             <td class="text-center fw-black text-dark">$ @p.Precio.ToString("N0")</td>
                             <td class="text-end pe-4">
-                                <a asp-action="EditarProducto" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary fw-bold me-1">
-                                    <i class="fa-solid fa-pen"></i> Editar
-                                </a>
-                                <form asp-action="EliminarProducto" asp-route-id="@p.Id" method="post" class="d-inline" onsubmit="return confirm('¿Seguro que quieres borrar este componente de la base de datos?');">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger fw-bold">
-                                        <i class="fa-solid fa-trash"></i>
+                                @if (esAdminReal)
+                                {
+                                    <a asp-action="EditarProducto" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary fw-bold me-1">
+                                        <i class="fa-solid fa-pen"></i> Editar
+                                    </a>
+
+                                    <form asp-action="EliminarProducto" asp-route-id="@p.Id" method="post" class="d-inline" onsubmit="return confirm('¿Seguro que quieres borrar este componente de la base de datos?');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger fw-bold">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-sm btn-outline-secondary fw-bold me-1" disabled>
+                                        <i class="fa-solid fa-lock"></i> Editar
                                     </button>
-                                </form>
+
+                                    <button type="button" class="btn btn-sm btn-outline-secondary fw-bold" disabled>
+                                        <i class="fa-solid fa-lock"></i>
+                                    </button>
+                                }
                             </td>
                         </tr>
                     }
