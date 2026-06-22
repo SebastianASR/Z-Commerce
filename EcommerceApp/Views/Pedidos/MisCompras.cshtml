@@ -1,0 +1,214 @@
+﻿@model List<EcommerceApp.Models.Pedido>
+
+@{
+    ViewData["Title"] = "Mis Compras";
+
+    var totalCompras = Model.Count;
+    var totalGastado = Model
+        .Where(p => p.EstadoPago == "Autorizado")
+        .Sum(p => p.Total);
+}
+
+<div class="container py-5 text-start">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+        <div>
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2 fw-bold">
+                HISTORIAL DE CLIENTE
+            </span>
+
+            <h2 class="fw-black mb-1 mt-2">
+                <i class="fa-solid fa-bag-shopping text-primary me-2"></i>Mis Compras
+            </h2>
+
+            <p class="text-muted mb-0">
+                Revisa tus pedidos realizados, estado de compra y detalle de productos adquiridos.
+            </p>
+        </div>
+
+        <a asp-controller="Home" asp-action="Catalogo" class="btn btn-outline-dark fw-bold rounded-3">
+            <i class="fa-solid fa-store me-1"></i> Seguir comprando
+        </a>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="text-muted small fw-bold mb-1">TOTAL DE PEDIDOS</p>
+                        <h3 class="fw-black mb-0">@totalCompras</h3>
+                    </div>
+
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-4 p-3">
+                        <i class="fa-solid fa-receipt fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="text-muted small fw-bold mb-1">TOTAL COMPRADO</p>
+                        <h3 class="fw-black mb-0">$ @totalGastado.ToString("N0")</h3>
+                    </div>
+
+                    <div class="bg-success bg-opacity-10 text-success rounded-4 p-3">
+                        <i class="fa-solid fa-credit-card fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="text-muted small fw-bold mb-1">TIPO DE CUENTA</p>
+                        <h3 class="fw-black mb-0">Cliente</h3>
+                    </div>
+
+                    <div class="bg-dark bg-opacity-10 text-dark rounded-4 p-3">
+                        <i class="fa-solid fa-user-check fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+            <div class="mb-3">
+                <i class="fa-solid fa-cart-shopping display-4 text-muted opacity-50"></i>
+            </div>
+
+            <h4 class="fw-black text-dark mb-2">
+                Aún no tienes compras registradas
+            </h4>
+
+            <p class="text-muted mb-4">
+                Cuando realices una compra con tu cuenta, aparecerá aquí tu historial completo.
+            </p>
+
+            <a asp-controller="Home" asp-action="Catalogo" class="btn btn-primary fw-bold px-4 py-2 rounded-3">
+                <i class="fa-solid fa-store me-1"></i> Ver catálogo
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="ps-4 py-3">Pedido</th>
+                            <th class="py-3">Fecha</th>
+                            <th class="py-3">Productos</th>
+                            <th class="py-3">Estado Pago</th>
+                            <th class="py-3">Estado Pedido</th>
+                            <th class="py-3 text-end">Total</th>
+                            <th class="py-3 text-end pe-4">Acción</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var pedido in Model)
+                        {
+                            var cantidadProductos = pedido.Detalles.Sum(d => d.Cantidad);
+
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-bold text-dark">#@pedido.Id</div>
+
+                                    @if (!string.IsNullOrWhiteSpace(pedido.BuyOrder))
+                                    {
+                                        <small class="text-muted font-monospace">
+                                            @pedido.BuyOrder
+                                        </small>
+                                    }
+                                </td>
+
+                                <td>
+                                    <div class="fw-semibold text-dark">
+                                        @pedido.FechaPedido.ToLocalTime().ToString("dd/MM/yyyy")
+                                    </div>
+                                    <small class="text-muted">
+                                        @pedido.FechaPedido.ToLocalTime().ToString("HH:mm")
+                                    </small>
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">
+                                        @cantidadProductos producto(s)
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @if (pedido.EstadoPago == "Autorizado")
+                                    {
+                                        <span class="badge bg-success px-3 py-2">
+                                            <i class="fa-solid fa-circle-check me-1"></i> Autorizado
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark px-3 py-2">
+                                            <i class="fa-solid fa-clock me-1"></i> @pedido.EstadoPago
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @switch (pedido.EstadoPedido)
+                                    {
+                                        case "Pagado":
+                                            <span class="badge bg-primary px-3 py-2">Pagado</span>
+                                            break;
+
+                                        case "Preparando":
+                                            <span class="badge bg-info text-dark px-3 py-2">Preparando</span>
+                                            break;
+
+                                        case "Enviado":
+                                            <span class="badge bg-warning text-dark px-3 py-2">Enviado</span>
+                                            break;
+
+                                        case "Entregado":
+                                            <span class="badge bg-success px-3 py-2">Entregado</span>
+                                            break;
+
+                                        case "Cancelado":
+                                            <span class="badge bg-danger px-3 py-2">Cancelado</span>
+                                            break;
+
+                                        default:
+                                            <span class="badge bg-secondary px-3 py-2">@pedido.EstadoPedido</span>
+                                            break;
+                                    }
+                                </td>
+
+                                <td class="text-end">
+                                    <span class="fw-black text-dark">
+                                        $ @pedido.Total.ToString("N0")
+                                    </span>
+                                </td>
+
+                                <td class="text-end pe-4">
+                                    <a asp-controller="Pedidos"
+                                       asp-action="Detalle"
+                                       asp-route-id="@pedido.Id"
+                                       class="btn btn-sm btn-outline-primary fw-bold rounded-3">
+                                        <i class="fa-solid fa-eye me-1"></i> Ver detalle
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

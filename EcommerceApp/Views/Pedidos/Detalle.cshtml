@@ -1,0 +1,270 @@
+﻿@model EcommerceApp.Models.Pedido
+
+@{
+    ViewData["Title"] = $"Detalle Pedido #{Model.Id}";
+
+    bool esDemoAdmin = ViewBag.EsDemoAdmin == true;
+    bool esAdminODemo = User.IsInRole("Admin") || User.IsInRole("DemoAdmin");
+
+    var cantidadProductos = Model.Detalles.Sum(d => d.Cantidad);
+}
+
+<div class="container py-5 text-start">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+        <div>
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2 fw-bold">
+                DETALLE DE PEDIDO
+            </span>
+
+            <h2 class="fw-black mb-1 mt-2">
+                <i class="fa-solid fa-receipt text-primary me-2"></i>Pedido #@Model.Id
+            </h2>
+
+            <p class="text-muted mb-0">
+                Información completa de la compra, productos, despacho y estado del pedido.
+            </p>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap">
+            @if (esAdminODemo)
+            {
+                <a asp-controller="Pedidos" asp-action="AdminCompras" class="btn btn-outline-dark fw-bold rounded-3">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Volver al panel
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Pedidos" asp-action="MisCompras" class="btn btn-outline-dark fw-bold rounded-3">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Volver a mis compras
+                </a>
+            }
+
+            <a asp-controller="Home" asp-action="Catalogo" class="btn btn-primary fw-bold rounded-3">
+                <i class="fa-solid fa-store me-1"></i> Catálogo
+            </a>
+        </div>
+    </div>
+
+    @if (esDemoAdmin)
+    {
+        <div class="alert alert-warning border-0 rounded-4 shadow-sm mb-4">
+            <div class="fw-bold">
+                <i class="fa-solid fa-user-shield me-1"></i> Modo DemoAdmin activo
+            </div>
+            <div class="small">
+                Puedes revisar el detalle del pedido, pero no puedes modificar estados ni ejecutar acciones críticas.
+            </div>
+        </div>
+    }
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <p class="text-muted small fw-bold mb-1">ESTADO PAGO</p>
+
+                @if (Model.EstadoPago == "Autorizado")
+                {
+                    <h5 class="fw-black text-success mb-0">
+                        <i class="fa-solid fa-circle-check me-1"></i> Autorizado
+                    </h5>
+                }
+                else
+                {
+                    <h5 class="fw-black text-warning mb-0">
+                        <i class="fa-solid fa-clock me-1"></i> @Model.EstadoPago
+                    </h5>
+                }
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <p class="text-muted small fw-bold mb-1">ESTADO PEDIDO</p>
+                <h5 class="fw-black text-dark mb-0">@Model.EstadoPedido</h5>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <p class="text-muted small fw-bold mb-1">PRODUCTOS</p>
+                <h5 class="fw-black text-dark mb-0">@cantidadProductos unidad(es)</h5>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <p class="text-muted small fw-bold mb-1">TOTAL</p>
+                <h5 class="fw-black text-primary mb-0">$ @Model.Total.ToString("N0")</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-4">
+                <div class="p-4 border-bottom">
+                    <h5 class="fw-bold mb-1 text-dark">
+                        <i class="fa-solid fa-box-open text-primary me-2"></i>Productos Comprados
+                    </h5>
+                    <p class="text-muted small mb-0">
+                        Detalle de componentes incluidos en esta orden.
+                    </p>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="ps-4 py-3">Producto</th>
+                                <th class="py-3 text-center">Cantidad</th>
+                                <th class="py-3 text-end">Precio Unitario</th>
+                                <th class="py-3 text-end pe-4">Subtotal</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var detalle in Model.Detalles)
+                            {
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img src="@detalle.Producto.ImagenUrl"
+                                                 alt="@detalle.Producto.Nombre"
+                                                 class="rounded-3 border bg-light object-fit-contain"
+                                                 style="width: 64px; height: 64px;" />
+
+                                            <div>
+                                                <div class="fw-bold text-dark">
+                                                    @detalle.Producto.Nombre
+                                                </div>
+
+                                                <small class="text-muted">
+                                                    @detalle.Producto.Descripcion
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">
+                                            x@detalle.Cantidad
+                                        </span>
+                                    </td>
+
+                                    <td class="text-end text-muted">
+                                        $ @detalle.PrecioUnitario.ToString("N0")
+                                    </td>
+
+                                    <td class="text-end pe-4">
+                                        <span class="fw-black text-dark">
+                                            $ @((detalle.PrecioUnitario * detalle.Cantidad).ToString("N0"))
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+
+                            <tr class="table-active">
+                                <td colspan="3" class="ps-4 fw-bold text-dark">
+                                    TOTAL PEDIDO
+                                </td>
+
+                                <td class="text-end pe-4">
+                                    <span class="fw-black text-primary fs-5">
+                                        $ @Model.Total.ToString("N0")
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.ComentarioCliente))
+            {
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                    <h5 class="fw-bold text-dark mb-2">
+                        <i class="fa-solid fa-message text-primary me-2"></i>Comentario del Cliente
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        @Model.ComentarioCliente
+                    </p>
+                </div>
+            }
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                <h5 class="fw-bold text-dark mb-3">
+                    <i class="fa-solid fa-user text-primary me-2"></i>Cliente
+                </h5>
+
+                <div class="small text-muted mb-2">Nombre</div>
+                <div class="fw-bold text-dark mb-3">@Model.NombreCompleto</div>
+
+                <div class="small text-muted mb-2">Correo</div>
+                <div class="fw-semibold text-dark mb-3">@Model.Correo</div>
+
+                <div class="small text-muted mb-2">Teléfono</div>
+                <div class="fw-semibold text-dark mb-3">@Model.Telefono</div>
+
+                <div class="small text-muted mb-2">Tipo de cliente</div>
+                <span class="badge bg-dark px-3 py-2">
+                    @Model.TipoCliente
+                </span>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                <h5 class="fw-bold text-dark mb-3">
+                    <i class="fa-solid fa-location-dot text-primary me-2"></i>Despacho
+                </h5>
+
+                <div class="small text-muted mb-2">Dirección</div>
+                <div class="fw-bold text-dark mb-3">
+                    @Model.Calle #@Model.Numero
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.DeptoBlockOficina))
+                {
+                    <div class="small text-muted mb-2">Detalle</div>
+                    <div class="fw-semibold text-dark mb-3">
+                        @Model.DeptoBlockOficina
+                    </div>
+                }
+
+                <div class="small text-muted mb-2">Comuna</div>
+                <div class="fw-semibold text-dark mb-3">@Model.Comuna</div>
+
+                <div class="small text-muted mb-2">Región</div>
+                <div class="fw-semibold text-dark mb-0">@Model.Region</div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-dark text-white">
+                <h5 class="fw-bold text-primary mb-3">
+                    <i class="fa-solid fa-shield-halved me-2"></i>Información Técnica
+                </h5>
+
+                <div class="small text-secondary mb-2">Fecha de compra</div>
+                <div class="fw-semibold mb-3">
+                    @Model.FechaPedido.ToLocalTime().ToString("dd/MM/yyyy HH:mm")
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.BuyOrder))
+                {
+                    <div class="small text-secondary mb-2">Buy Order</div>
+                    <div class="fw-semibold font-monospace mb-3">
+                        @Model.BuyOrder
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.WebpayToken))
+                {
+                    <div class="small text-secondary mb-2">Token Webpay</div>
+                    <div class="fw-semibold font-monospace text-break mb-0">
+                        @Model.WebpayToken
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
