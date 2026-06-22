@@ -64,6 +64,8 @@ namespace EcommerceApp.Controllers
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
+                TempData["SuccessMessage"] = $"¡Bienvenido/a, {user.Nombre}! Tu cuenta fue creada correctamente.";
+
                 if (!string.IsNullOrWhiteSpace(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                 {
                     return LocalRedirect(model.ReturnUrl);
@@ -108,6 +110,13 @@ namespace EcommerceApp.Controllers
 
             if (result.Succeeded)
             {
+                var usuario = await _userManager.FindByEmailAsync(model.Email);
+                var nombreUsuario = usuario?.Nombre;
+
+                TempData["SuccessMessage"] = !string.IsNullOrWhiteSpace(nombreUsuario)
+                    ? $"¡Hola, {nombreUsuario}! Has iniciado sesión correctamente."
+                    : "Has iniciado sesión correctamente.";
+
                 if (!string.IsNullOrWhiteSpace(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                 {
                     return LocalRedirect(model.ReturnUrl);
