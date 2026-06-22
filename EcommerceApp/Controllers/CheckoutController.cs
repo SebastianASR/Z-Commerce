@@ -1,7 +1,9 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using EcommerceApp.Models;
+using EcommerceApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +14,8 @@ namespace EcommerceApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IEmailService _emailService;
+        private readonly ILogger<CheckoutController> _logger;
 
         // Webpay Plus NORMAL - Ambiente de integración / sandbox
         private const string CommerceCode = "597055555532";
@@ -25,11 +28,13 @@ namespace EcommerceApp.Controllers
         public CheckoutController(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            IEmailService emailService,
+            ILogger<CheckoutController> logger)
         {
             _context = context;
             _userManager = userManager;
-            _signInManager = signInManager;
+            _emailService = emailService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -161,7 +166,7 @@ namespace EcommerceApp.Controllers
                 {
                     UserName = modelo.Correo,
                     Email = modelo.Correo,
-                    EmailConfirmed = true,
+                    EmailConfirmed = false,
 
                     Nombre = modelo.Nombre,
                     Apellido = modelo.Apellido,
@@ -190,10 +195,25 @@ namespace EcommerceApp.Controllers
                 }
 
                 await _userManager.AddToRoleAsync(usuario, "Cliente");
-                await _signInManager.SignInAsync(usuario, isPersistent: false);
 
-                usuarioId = usuario.Id;
-                tipoCliente = "Cuenta creada desde checkout";
+                try
+                {
+                    await EnviarCorreoConfirmacionAsync(usuario);
+
+                    TempData["SuccessMessage"] =
+                        "Tu cuenta fue creada correctamente. Antes de pagar, confirma tu correo e inicia sesión para continuar con la compra.";
+
+                    return RedirectToAction("RegisterConfirmation", "Account", new { email = usuario.Email });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error enviando correo de confirmación desde checkout para {Email}", usuario.Email);
+
+                    TempData["ErrorMessage"] =
+                        "Tu cuenta fue creada, pero no pudimos enviar el correo de confirmación. Solicita un nuevo enlace para activar tu cuenta.";
+
+                    return RedirectToAction("ResendEmailConfirmation", "Account");
+                }
             }
 
             if (modelo.Total <= 0)
@@ -224,14 +244,14 @@ namespace EcommerceApp.Controllers
                 Total = modelo.Total,
                 FechaPedido = DateTime.UtcNow
             };
-            HttpContext.Session.SetString("DatosDespachoTemporal", JsonSerializer.Serialize(pedidoTemporal));
 
+            HttpContext.Session.SetString("DatosDespachoTemporal", JsonSerializer.Serialize(pedidoTemporal));
             string? returnUrl = Url.Action(
-                action: "RetornoWebpay",
-                controller: "Checkout",
-                values: null,
-                protocol: Request.Scheme
-            );
+    action: "RetornoWebpay",
+    controller: "Checkout",
+    values: null,
+    protocol: Request.Scheme
+);
 
             if (string.IsNullOrWhiteSpace(returnUrl))
             {
@@ -433,6 +453,83 @@ namespace EcommerceApp.Controllers
                 .Where(x => x != null)
                 .Select(x => x!)
                 .ToList();
+        }
+
+        private async Task EnviarCorreoConfirmacionAsync(ApplicationUser user)
+        {
+            if (string.IsNullOrWhiteSpace(user.Email))
+            {
+                throw new InvalidOperationException("El usuario no tiene correo electrónico.");
+            }
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var callbackUrl = Url.Action(
+                action: "ConfirmEmail",
+                controller: "Account",
+                values: new
+                {
+                    userId = user.Id,
+                    token
+                },
+                protocol: Request.Scheme
+            );
+
+            if (string.IsNullOrWhiteSpace(callbackUrl))
+            {
+                throw new InvalidOperationException("No se pudo generar el enlace de confirmación.");
+            }
+
+            var safeUrl = WebUtility.HtmlEncode(callbackUrl);
+            var safeName = WebUtility.HtmlEncode(user.Nombre ?? "cliente");
+
+            var html = $@"
+                <div style='font-family:Arial,sans-serif;max-width:620px;margin:auto;background:#f8fafc;padding:24px;border-radius:18px;border:1px solid #e2e8f0;'>
+                    <div style='background:#0f172a;color:#ffffff;padding:22px;border-radius:16px;text-align:center;'>
+                        <h1 style='margin:0;font-size:26px;'>Z-Commerce</h1>
+                        <p style='margin:8px 0 0;color:#93c5fd;'>Confirmación de cuenta</p>
+                    </div>
+
+                    <div style='padding:24px 4px;color:#0f172a;'>
+                        <h2 style='margin-top:0;'>Hola {safeName},</h2>
+
+                        <p style='font-size:15px;line-height:1.6;'>
+                            Gracias por registrarte en <strong>Z-Commerce</strong>.
+                            Antes de continuar con tu compra, debes confirmar tu correo electrónico.
+                        </p>
+
+                        <div style='text-align:center;margin:30px 0;'>
+                            <a href='{safeUrl}'
+                               style='background:#0d6efd;color:#ffffff;text-decoration:none;padding:14px 24px;border-radius:12px;font-weight:bold;display:inline-block;'>
+                                Confirmar mi cuenta
+                            </a>
+                        </div>
+
+                        <p style='font-size:13px;color:#64748b;line-height:1.6;'>
+                            Después de confirmar tu correo, inicia sesión y vuelve al checkout para finalizar tu compra.
+                        </p>
+
+                        <p style='font-size:13px;color:#64748b;line-height:1.6;'>
+                            Si el botón no funciona, copia y pega este enlace en tu navegador:
+                        </p>
+
+                        <p style='font-size:12px;word-break:break-all;color:#2563eb;'>
+                            {safeUrl}
+                        </p>
+
+                        <hr style='border:none;border-top:1px solid #e2e8f0;margin:24px 0;' />
+
+                        <p style='font-size:12px;color:#94a3b8;margin:0;'>
+                            Si no creaste esta cuenta, puedes ignorar este mensaje.
+                        </p>
+                    </div>
+                </div>";
+
+            await _emailService.SendEmailAsync(
+                user.Email,
+                "Confirma tu cuenta en Z-Commerce",
+                html
+            );
         }
 
         private static HttpClient CrearClienteTransbank()
