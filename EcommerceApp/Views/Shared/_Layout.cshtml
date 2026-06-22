@@ -220,6 +220,30 @@
 
     <div class="container my-5 flex-grow-1">
         <main role="main" class="pb-5 animate-fadeIn">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="container mt-4">
+                    <div id="successAlert"
+                         class="alert alert-success alert-dismissible fade show rounded-4 shadow-sm border-0 d-flex align-items-center"
+                         role="alert">
+                        <div class="me-3">
+                            <i class="fa-solid fa-circle-check fs-4"></i>
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <strong>Operación exitosa</strong>
+                            <div class="small">
+                                @TempData["SuccessMessage"]
+                            </div>
+                        </div>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Cerrar"></button>
+                    </div>
+                </div>
+            }
             @RenderBody()
         </main>
     </div>
@@ -401,5 +425,17 @@
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const successAlert = document.getElementById("successAlert");
+
+            if (successAlert) {
+                setTimeout(function () {
+                    const bootstrapAlert = bootstrap.Alert.getOrCreateInstance(successAlert);
+                    bootstrapAlert.close();
+                }, 4500);
+            }
+        });
+    </script>
 </body>
 </html>
