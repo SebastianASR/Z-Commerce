@@ -442,7 +442,6 @@ Santiago, Chile
 ✅ Carrito dinámico
 ✅ Gestión de solicitudes
 ✅ Exportación Excel
-✅ Listo para portafolio profesional
 
 ---
 
