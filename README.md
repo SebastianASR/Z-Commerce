@@ -567,11 +567,7 @@ Santiago, Chile
 - Gestión de solicitudes
 - Exportación Excel
 - Variables de entorno configuradas para producción
+- DashBoard de métricas de ventas
 
 ---
-
-## 🧭 Próximas Mejoras
-
-* Dashboard con métricas de ventas.
-* Tests unitarios y de integración.
 
