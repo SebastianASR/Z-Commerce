@@ -28,12 +28,15 @@ var connectionString = builder.Configuration.GetConnectionString("NeonConnection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// 4. SERVICIO DE CORREO SMTP
+// 4. SERVICIO DE CORREO CON BREVO API
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection("EmailSettings")
 );
 
-builder.Services.AddTransient<IEmailService, SmtpEmailService>();
+builder.Services.AddHttpClient<IEmailService, BrevoEmailService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(20);
+});
 
 // 5. CONFIGURACIÓN DE IDENTITY CON USUARIO PERSONALIZADO
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
