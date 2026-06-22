@@ -550,23 +550,23 @@ Santiago, Chile
 
 ## 📌 Estado del Proyecto
 
-✅ Proyecto funcional
-✅ Desplegado en Render
-✅ Base de datos cloud en Neon
-✅ Webpay Plus Sandbox integrado
-✅ Login y registro con Identity
-✅ Confirmación real de correo electrónico
-✅ Recuperación de contraseña con Brevo API
-✅ Reenvío de enlace de confirmación
-✅ Checkout invitado y registrado
-✅ DemoAdmin seguro
-✅ Carrito dinámico
-✅ Historial de compras para clientes
-✅ Panel administrativo de pedidos
-✅ Eliminación de ventas para Admin
-✅ Gestión de solicitudes
-✅ Exportación Excel
-✅ Variables de entorno configuradas para producción
+- Proyecto funcional
+- Desplegado en Render
+- Base de datos cloud en Neon
+- Webpay Plus Sandbox integrado
+- Login y registro con Identity
+- Confirmación real de correo electrónico
+- Recuperación de contraseña con Brevo API
+- Reenvío de enlace de confirmación
+- Checkout invitado y registrado
+- DemoAdmin seguro
+- Carrito dinámico
+- Historial de compras para clientes
+- Panel administrativo de pedidos
+- Eliminación de ventas para Admin
+- Gestión de solicitudes
+- Exportación Excel
+- Variables de entorno configuradas para producción
 
 ---
 
