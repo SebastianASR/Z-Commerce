@@ -28,7 +28,14 @@ var connectionString = builder.Configuration.GetConnectionString("NeonConnection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// 4. CONFIGURACIÓN DE IDENTITY CON USUARIO PERSONALIZADO
+// 4. SERVICIO DE CORREO SMTP
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings")
+);
+
+builder.Services.AddTransient<IEmailService, SmtpEmailService>();
+
+// 5. CONFIGURACIÓN DE IDENTITY CON USUARIO PERSONALIZADO
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     // Reglas de contraseña seguras
@@ -47,14 +54,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     // Configuración de usuario
     options.User.RequireUniqueEmail = true;
 
-    // Para demo/portafolio no exigimos confirmación por correo
-    options.SignIn.RequireConfirmedEmail = false;
+    // Confirmación real de correo
+    options.SignIn.RequireConfirmedEmail = true;
 })
 .AddErrorDescriber<SpanishIdentityErrorDescriber>()
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// 5. CONFIGURACIÓN DE COOKIES DE AUTENTICACIÓN
+// 6. CONFIGURACIÓN DE COOKIES DE AUTENTICACIÓN
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
@@ -72,14 +79,14 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 var app = builder.Build();
 
-// 6. SEED DE ROLES Y USUARIOS DEMO
+// 7. SEED DE ROLES Y USUARIOS DEMO
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     await DbInitializer.SeedRolesAndAdmin(services);
 }
 
-// 7. PIPELINE HTTP
+// 8. PIPELINE HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

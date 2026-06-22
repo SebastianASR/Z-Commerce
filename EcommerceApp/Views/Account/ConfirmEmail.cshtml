@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Correo confirmado";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header bg-dark text-white text-center py-4 border-0">
+                    <h3 class="fw-black mb-1">
+                        <i class="fa-solid fa-circle-check text-success me-2"></i>
+                        Confirmación de correo
+                    </h3>
+                    <p class="text-light opacity-75 mb-0 small">
+                        Estado de activación de cuenta
+                    </p>
+                </div>
+
+                <div class="card-body p-5 text-center">
+                    <div class="mb-4">
+                        <i class="fa-solid fa-user-check display-3 text-success"></i>
+                    </div>
+
+                    <h4 class="fw-black text-dark mb-3">
+                        Tu cuenta ya puede iniciar sesión
+                    </h4>
+
+                    <p class="text-muted mb-4">
+                        Si la confirmación fue correcta, ahora puedes acceder con tu correo y contraseña.
+                    </p>
+
+                    <a asp-controller="Account"
+                       asp-action="Login"
+                       class="btn btn-primary fw-bold rounded-3 px-4">
+                        <i class="fa-solid fa-arrow-right-to-bracket me-1"></i>
+                        Iniciar sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
