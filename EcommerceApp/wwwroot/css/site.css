@@ -29,3 +29,185 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* ================================
+   Z-COMMERCE CART — TECH BLUE THEME
+   ================================ */
+
+#offcanvasCarrito {
+    background: radial-gradient(circle at top left, rgba(13, 110, 253, 0.18), transparent 34%), radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.12), transparent 35%), rgba(15, 23, 42, 0.97) !important;
+}
+
+    #offcanvasCarrito .offcanvas-header {
+        background: rgba(2, 6, 23, 0.45);
+    }
+
+    #offcanvasCarrito .offcanvas-title {
+        color: #3b82f6 !important;
+        font-size: 1.25rem;
+        letter-spacing: 0.08em;
+    }
+
+#contenedor-carrito-offcanvas {
+    padding-top: 1.35rem !important;
+}
+
+    /* Agranda imágenes del producto dentro del carrito */
+    #contenedor-carrito-offcanvas img {
+        width: 72px !important;
+        height: 72px !important;
+        object-fit: cover !important;
+        border-radius: 16px !important;
+        border: 1px solid rgba(59, 130, 246, 0.45) !important;
+        box-shadow: 0 0 22px rgba(13, 110, 253, 0.18);
+        background: rgba(15, 23, 42, 0.85);
+    }
+
+    /* Mejora el bloque de cada producto */
+    #contenedor-carrito-offcanvas .border-bottom {
+        border-color: rgba(148, 163, 184, 0.22) !important;
+        padding-bottom: 1.25rem !important;
+        margin-bottom: 1.25rem !important;
+    }
+
+    /* Nombre del producto */
+    #contenedor-carrito-offcanvas .fw-bold {
+        font-size: 1rem;
+    }
+
+    /* Precio del producto */
+    #contenedor-carrito-offcanvas .text-primary {
+        color: #38bdf8 !important;
+    }
+
+    /* Cantidad */
+    #contenedor-carrito-offcanvas .badge {
+        font-size: 0.8rem;
+        padding: 0.45rem 0.65rem;
+        border-radius: 999px;
+        background: rgba(59, 130, 246, 0.16) !important;
+        color: #bfdbfe !important;
+        border: 1px solid rgba(59, 130, 246, 0.35);
+    }
+
+    /* Botones del carrito */
+    #contenedor-carrito-offcanvas .btn {
+        min-height: 38px;
+        padding: 0.48rem 0.9rem;
+        border-radius: 999px !important;
+        font-size: 0.86rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+    }
+
+    /* Botón Agregar */
+    #contenedor-carrito-offcanvas .btn-outline-success {
+        color: #60a5fa !important;
+        border-color: rgba(96, 165, 250, 0.75) !important;
+        background: rgba(37, 99, 235, 0.10) !important;
+        box-shadow: 0 0 0 rgba(59, 130, 246, 0);
+    }
+
+        #contenedor-carrito-offcanvas .btn-outline-success:hover {
+            color: #ffffff !important;
+            border-color: #3b82f6 !important;
+            background: linear-gradient(135deg, #0d6efd, #2563eb) !important;
+            box-shadow: 0 0 18px rgba(59, 130, 246, 0.38);
+            transform: translateY(-1px);
+        }
+
+    /* Botón Quitar */
+    #contenedor-carrito-offcanvas .btn-outline-warning {
+        color: #93c5fd !important;
+        border-color: rgba(147, 197, 253, 0.65) !important;
+        background: rgba(30, 64, 175, 0.12) !important;
+    }
+
+        #contenedor-carrito-offcanvas .btn-outline-warning:hover {
+            color: #ffffff !important;
+            border-color: #60a5fa !important;
+            background: linear-gradient(135deg, #1d4ed8, #0f172a) !important;
+            box-shadow: 0 0 18px rgba(96, 165, 250, 0.30);
+            transform: translateY(-1px);
+        }
+
+    /* Botón Eliminar: sigue indicando peligro, pero más sobrio y moderno */
+    #contenedor-carrito-offcanvas .btn-outline-danger {
+        color: #7dd3fc !important;
+        border-color: rgba(14, 165, 233, 0.60) !important;
+        background: rgba(14, 165, 233, 0.08) !important;
+    }
+
+        #contenedor-carrito-offcanvas .btn-outline-danger:hover {
+            color: #ffffff !important;
+            border-color: #0ea5e9 !important;
+            background: linear-gradient(135deg, #0369a1, #0f172a) !important;
+            box-shadow: 0 0 18px rgba(14, 165, 233, 0.32);
+            transform: translateY(-1px);
+        }
+
+    /* Iconos de botones */
+    #contenedor-carrito-offcanvas .btn i {
+        margin-right: 0.25rem;
+    }
+
+    /* Subtotal / total dentro del carrito */
+    #contenedor-carrito-offcanvas .text-success {
+        color: #38bdf8 !important;
+        text-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+        font-weight: 900 !important;
+    }
+
+    /* Botón vaciar carrito más acorde al tema */
+    #contenedor-carrito-offcanvas .btn-outline-danger.w-100,
+    #contenedor-carrito-offcanvas button.btn-outline-danger.w-100,
+    #contenedor-carrito-offcanvas a.btn-outline-danger.w-100 {
+        color: #60a5fa !important;
+        border-color: rgba(59, 130, 246, 0.58) !important;
+        background: rgba(37, 99, 235, 0.08) !important;
+    }
+
+        #contenedor-carrito-offcanvas .btn-outline-danger.w-100:hover,
+        #contenedor-carrito-offcanvas button.btn-outline-danger.w-100:hover,
+        #contenedor-carrito-offcanvas a.btn-outline-danger.w-100:hover {
+            color: #ffffff !important;
+            border-color: #3b82f6 !important;
+            background: linear-gradient(135deg, #0d6efd, #1e40af) !important;
+        }
+
+/* Footer del carrito */
+#offcanvasCarrito .offcanvas-footer {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.96)) !important;
+    border-top: 1px solid rgba(59, 130, 246, 0.22) !important;
+}
+
+/* Botón checkout más premium */
+#btnCheckoutOffcanvas {
+    background: linear-gradient(135deg, #0d6efd, #2563eb, #1d4ed8) !important;
+    border: 1px solid rgba(147, 197, 253, 0.45) !important;
+    box-shadow: 0 14px 35px rgba(13, 110, 253, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+    #btnCheckoutOffcanvas:hover {
+        background: linear-gradient(135deg, #2563eb, #0ea5e9) !important;
+        box-shadow: 0 18px 42px rgba(14, 165, 233, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+        transform: translateY(-1px);
+    }
+
+/* Responsive */
+@media (max-width: 576px) {
+    #offcanvasCarrito {
+        width: 100vw !important;
+        max-width: 100vw !important;
+    }
+
+    #contenedor-carrito-offcanvas img {
+        width: 62px !important;
+        height: 62px !important;
+    }
+
+    #contenedor-carrito-offcanvas .btn {
+        font-size: 0.78rem;
+        padding: 0.42rem 0.68rem;
+    }
+}
