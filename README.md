@@ -27,7 +27,7 @@ Este proyecto fue desarrollado como parte de mi portafolio profesional para demo
 
 | Inicio                                                                                      | Carrito                                                                                     |
 | :------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------ |
-| ![Portada](https://github.com/user-attachments/assets/37009572-61a5-42ae-a574-e0a20313d865) | ![Carrito](https://github.com/user-attachments/assets/5c5f27a4-62ac-470a-be57-95c121c840f1) |
+| ![Portada](https://github.com/user-attachments/assets/37009572-61a5-42ae-a574-e0a20313d865) | ![Carrito](https://github.com/user-attachments/assets/cd17c93c-136d-4e77-8537-6f5c14bc73d3) |
 
 ---
 
