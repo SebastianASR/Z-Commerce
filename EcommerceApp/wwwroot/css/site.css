@@ -405,3 +405,66 @@ body {
         background: rgba(37, 99, 235, 0.18);
         border-color: rgba(96, 165, 250, 0.55);
     }
+/* ================================
+   Z-COMMERCE NAVBAR RESPONSIVE FIX
+   ================================ */
+
+.z-navbar-actions {
+    width: 100%;
+}
+
+.z-nav-cart,
+.z-nav-login,
+.z-nav-register {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.z-nav-cart {
+    min-width: 150px;
+}
+
+.z-nav-register {
+    min-width: 145px;
+}
+
+.z-nav-login {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+@media (min-width: 992px) {
+    .z-navbar-actions {
+        width: auto;
+        flex-wrap: nowrap;
+    }
+
+    .z-nav-cart {
+        width: auto;
+        min-width: 150px;
+    }
+
+    .z-nav-login {
+        width: auto;
+    }
+
+    .z-nav-register {
+        width: auto;
+        min-width: 140px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .z-nav-cart,
+    .z-nav-login,
+    .z-nav-register {
+        width: 100%;
+    }
+
+    .z-navbar-actions {
+        align-items: stretch !important;
+    }
+}

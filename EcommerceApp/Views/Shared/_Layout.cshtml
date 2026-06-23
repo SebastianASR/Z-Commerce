@@ -152,7 +152,7 @@
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary border-opacity-25 shadow-sm py-3">
-            <div class="container">
+            <div class="container-fluid px-3 px-xl-5">
 
                 <a class="navbar-brand text-uppercase tracking-wide fs-4 epic-logo d-flex align-items-center text-decoration-none" asp-controller="Home" asp-action="Index">
                     <span style="--i:1; --clr:#0d6efd;"><i class="fa-solid fa-microchip me-1 animate-pulse text-primary"></i>Z</span>
@@ -172,23 +172,35 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarMain">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-lg-4 gap-2 d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3 gap-lg-2 gap-2 d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
                         <li class="nav-item">
-                            <a class="nav-link text-light fw-medium small text-uppercase tracking-wide text-nowrap" asp-controller="Home" asp-action="Catalogo">
+                            <a class="nav-link text-light fw-medium small text-uppercase tracking-wide text-nowrap"
+                               asp-controller="Home"
+                               asp-action="Catalogo">
                                 <i class="fa-solid fa-layer-group me-1 opacity-75"></i> Catálogo
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-light fw-medium small text-uppercase tracking-wide text-nowrap" asp-controller="Home" asp-action="Privacy">
+                            <a class="nav-link text-light fw-medium small text-uppercase tracking-wide text-nowrap"
+                               asp-controller="Home"
+                               asp-action="QuienesSomos">
+                                <i class="fa-solid fa-building-shield me-1 opacity-75"></i> Quiénes somos
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-light fw-medium small text-uppercase tracking-wide text-nowrap"
+                               asp-controller="Home"
+                               asp-action="Privacy">
                                 <i class="fa-solid fa-shield-halved me-1 opacity-75"></i> Garantía y Seguridad
                             </a>
                         </li>
                     </ul>
 
-                    <div class="d-flex align-items-center flex-column flex-lg-row gap-3 gap-lg-4 ms-lg-5 w-100 w-lg-auto mt-3 mt-lg-0 justify-content-end">
+                    <div class="z-navbar-actions d-flex align-items-center flex-column flex-lg-row gap-3 gap-lg-3 ms-lg-auto mt-3 mt-lg-0 justify-content-end flex-shrink-0">
 
-                        <a href="javascript:void(0)" onclick="abrirCarritoLateral(null)" class="btn btn-outline-primary fw-bold px-4 rounded-3 position-relative d-flex align-items-center justify-content-center w-100 w-lg-auto">
+                        <a href="javascript:void(0)" onclick="abrirCarritoLateral(null)" class="btn btn-outline-primary fw-bold px-3 rounded-3 position-relative d-flex align-items-center justify-content-center z-nav-cart">
                             <i class="fa-solid fa-cart-shopping me-2"></i> Carrito
 
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-dark shadow animate-bounce" id="badgeCartCount" style="display:none; font-size: 0.75rem;">
@@ -358,11 +370,11 @@
                         }
                         else
                         {
-                            <a asp-controller="Account" asp-action="Login" class="btn btn-link text-light text-decoration-none fw-bold small text-uppercase tracking-wide w-100 w-lg-auto text-center text-nowrap btn-login-hover">
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-link text-light text-decoration-none fw-bold small text-uppercase tracking-wide text-center text-nowrap btn-login-hover z-nav-login">
                                 <i class="fa-solid fa-lock text-secondary me-2 opacity-75"></i>Ingresar
                             </a>
 
-                            <a asp-controller="Account" asp-action="Register" class="btn btn-register-premium fw-bold px-4 rounded-3 w-100 w-lg-auto text-nowrap">
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-register-premium fw-bold px-3 rounded-3 text-nowrap z-nav-register">
                                 <i class="fa-solid fa-user-plus me-2 opacity-75"></i>Registrarse
                             </a>
                         }

@@ -535,5 +535,11 @@ namespace EcommerceApp.Controllers
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             });
         }
+        [HttpGet]
+        public IActionResult QuienesSomos()
+        {
+            return View();
+        }
     }
 }
+

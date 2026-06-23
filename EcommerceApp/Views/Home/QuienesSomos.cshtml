@@ -1,0 +1,524 @@
+﻿@{
+    ViewData["Title"] = "Quiénes Somos";
+}
+
+<section class="z-about-hero position-relative overflow-hidden rounded-4 shadow-lg text-white mb-5">
+    <div class="position-relative z-1 p-4 p-lg-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7 text-start">
+                <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-50 px-3 py-2 fw-bold text-uppercase tracking-wider mb-3">
+                    <i class="fa-solid fa-microchip me-1"></i> Hardware Enterprise & Gaming
+                </span>
+
+                <h1 class="display-5 fw-black mb-3">
+                    Somos <span class="text-primary">Z-Commerce</span>, una tienda tecnológica creada para usuarios que buscan rendimiento real.
+                </h1>
+
+                <p class="fs-5 text-light opacity-75 mb-4">
+                    Nacimos con una idea simple: acercar componentes de alto rendimiento, asesoría técnica y una experiencia de compra moderna a personas, gamers, desarrolladores y equipos que necesitan hardware confiable.
+                </p>
+
+                <div class="d-flex flex-wrap gap-3">
+                    <a asp-controller="Home"
+                       asp-action="Catalogo"
+                       class="btn btn-primary btn-lg fw-bold px-4 py-3 rounded-3 shadow">
+                        Explorar catálogo
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+
+                    <a asp-controller="Home"
+                       asp-action="AsesoriaVip"
+                       class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-3">
+                        Solicitar asesoría
+                        <i class="fa-solid fa-headset ms-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="z-about-terminal rounded-4 p-4 shadow-lg">
+                    <div class="d-flex align-items-center gap-2 mb-4">
+                        <span class="z-dot bg-danger"></span>
+                        <span class="z-dot bg-warning"></span>
+                        <span class="z-dot bg-success"></span>
+                        <span class="small text-secondary ms-2 font-monospace">z-commerce/system/about</span>
+                    </div>
+
+                    <div class="font-monospace small">
+                        <div class="text-primary mb-2">&gt; Inicializando perfil corporativo...</div>
+                        <div class="text-light mb-2">Especialidad: Hardware de alto rendimiento</div>
+                        <div class="text-light mb-2">Cobertura: Santiago y despacho nacional</div>
+                        <div class="text-light mb-2">Enfoque: Gaming, productividad, servidores y proyectos TI</div>
+                        <div class="text-success mt-3">
+                            Estado: Plataforma operativa y segura
+                            <i class="fa-solid fa-circle-check ms-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <i class="fa-solid fa-cpu z-about-bg-icon"></i>
+</section>
+
+<section class="mb-5">
+    <div class="row g-4 text-start">
+        <div class="col-md-4">
+            <div class="z-about-card h-100 p-4 rounded-4 shadow-sm">
+                <div class="z-about-card-icon mb-3">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+
+                <h4 class="fw-black text-dark mb-2">Nuestra misión</h4>
+
+                <p class="text-muted mb-0">
+                    Entregar tecnología confiable, transparente y bien asesorada, ayudando a cada cliente a elegir componentes compatibles con sus necesidades reales.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="z-about-card h-100 p-4 rounded-4 shadow-sm">
+                <div class="z-about-card-icon mb-3">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+
+                <h4 class="fw-black text-dark mb-2">Nuestra visión</h4>
+
+                <p class="text-muted mb-0">
+                    Convertirnos en una plataforma tecnológica reconocida por combinar e-commerce, soporte técnico y experiencia digital segura en un solo lugar.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="z-about-card h-100 p-4 rounded-4 shadow-sm">
+                <div class="z-about-card-icon mb-3">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+
+                <h4 class="fw-black text-dark mb-2">Nuestra promesa</h4>
+
+                <p class="text-muted mb-0">
+                    Comprar hardware no debería ser confuso. En Z-Commerce buscamos que cada compra sea clara, segura y respaldada por información técnica.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="z-about-dark rounded-4 p-4 p-lg-5 mb-5 shadow-lg text-start">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+            <span class="badge bg-primary px-3 py-2 text-uppercase fw-bold tracking-wider mb-3">
+                Cómo trabajamos
+            </span>
+
+            <h2 class="fw-black text-white mb-3">
+                No vendemos solo piezas, ayudamos a construir soluciones.
+            </h2>
+
+            <p class="text-secondary mb-0">
+                Nuestro proceso está pensado para clientes que necesitan claridad antes de invertir: desde elegir un procesador o tarjeta gráfica, hasta cotizar servidores, almacenamiento NVMe o nodos para proyectos de inteligencia artificial.
+            </p>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="z-process-box p-4 rounded-4 h-100">
+                        <span class="z-process-number">01</span>
+                        <h5 class="fw-bold text-white mt-3">Selección técnica</h5>
+                        <p class="text-secondary small mb-0">
+                            Organizamos el catálogo por componentes clave: CPU, GPU, RAM, almacenamiento y soluciones especiales.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="z-process-box p-4 rounded-4 h-100">
+                        <span class="z-process-number">02</span>
+                        <h5 class="fw-bold text-white mt-3">Compra segura</h5>
+                        <p class="text-secondary small mb-0">
+                            El checkout usa validaciones, roles, Webpay Plus Sandbox y confirmación de correo para una experiencia más confiable.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="z-process-box p-4 rounded-4 h-100">
+                        <span class="z-process-number">03</span>
+                        <h5 class="fw-bold text-white mt-3">Gestión administrativa</h5>
+                        <p class="text-secondary small mb-0">
+                            Los pedidos, solicitudes, métricas de ventas e inventario se controlan desde un panel administrativo centralizado.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="z-process-box p-4 rounded-4 h-100">
+                        <span class="z-process-number">04</span>
+                        <h5 class="fw-bold text-white mt-3">Soporte y asesoría</h5>
+                        <p class="text-secondary small mb-0">
+                            El cliente puede solicitar apoyo para compras especiales, configuraciones empresariales o componentes de alto rendimiento.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mb-5">
+    <div class="row g-4 text-start">
+        <div class="col-lg-3 col-6">
+            <div class="z-metric-card rounded-4 p-4 text-center h-100">
+                <h3 class="fw-black text-primary mb-1">24/7</h3>
+                <p class="text-muted small fw-bold mb-0">Catálogo disponible</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="z-metric-card rounded-4 p-4 text-center h-100">
+                <h3 class="fw-black text-primary mb-1">+120</h3>
+                <p class="text-muted small fw-bold mb-0">Productos proyectados</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="z-metric-card rounded-4 p-4 text-center h-100">
+                <h3 class="fw-black text-primary mb-1">100%</h3>
+                <p class="text-muted small fw-bold mb-0">Gestión digital</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="z-metric-card rounded-4 p-4 text-center h-100">
+                <h3 class="fw-black text-primary mb-1">CL</h3>
+                <p class="text-muted small fw-bold mb-0">Enfoque mercado chileno</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mb-5">
+    <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+        <div class="text-start">
+            <span class="text-primary fw-bold small text-uppercase tracking-wider">
+                Valores Z-Commerce
+            </span>
+
+            <h3 class="fw-black mb-0">
+                Lo que guía nuestra plataforma
+            </h3>
+        </div>
+    </div>
+
+    <div class="row g-4 text-start">
+        <div class="col-md-6 col-lg-3">
+            <div class="z-value-card p-4 rounded-4 h-100">
+                <i class="fa-solid fa-lock text-primary fs-3 mb-3"></i>
+                <h5 class="fw-black text-dark">Seguridad</h5>
+                <p class="text-muted small mb-0">
+                    Priorizamos autenticación, protección de cuentas, roles y control de permisos.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="z-value-card p-4 rounded-4 h-100">
+                <i class="fa-solid fa-microchip text-primary fs-3 mb-3"></i>
+                <h5 class="fw-black text-dark">Rendimiento</h5>
+                <p class="text-muted small mb-0">
+                    Nos enfocamos en componentes que entregan potencia real para trabajo, gaming y productividad.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="z-value-card p-4 rounded-4 h-100">
+                <i class="fa-solid fa-circle-nodes text-primary fs-3 mb-3"></i>
+                <h5 class="fw-black text-dark">Escalabilidad</h5>
+                <p class="text-muted small mb-0">
+                    La plataforma está pensada para crecer con nuevos módulos, métricas, usuarios y servicios.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="z-value-card p-4 rounded-4 h-100">
+                <i class="fa-solid fa-headset text-primary fs-3 mb-3"></i>
+                <h5 class="fw-black text-dark">Acompañamiento</h5>
+                <p class="text-muted small mb-0">
+                    Buscamos que el cliente entienda qué compra y por qué ese componente se adapta a su necesidad.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="z-about-dark rounded-4 p-4 p-lg-5 mb-5 shadow-lg text-start">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+            <span class="badge bg-primary px-3 py-2 text-uppercase fw-bold tracking-wider mb-3">
+                Confianza técnica
+            </span>
+
+            <h2 class="fw-black text-white mb-3">
+                Pensado para usuarios que quieren comprar con seguridad y entender lo que están comprando.
+            </h2>
+
+            <p class="text-secondary mb-4">
+                En Z-Commerce combinamos una experiencia e-commerce moderna con información clara sobre productos, compatibilidad, rendimiento y soporte para compras más técnicas.
+            </p>
+
+            <div class="d-flex flex-column gap-3">
+                <div class="z-check-item">
+                    <i class="fa-solid fa-circle-check text-primary me-2"></i>
+                    Catálogo ordenado por componentes y necesidades reales.
+                </div>
+
+                <div class="z-check-item">
+                    <i class="fa-solid fa-circle-check text-primary me-2"></i>
+                    Flujo de compra con validaciones, correo confirmado y pagos simulados.
+                </div>
+
+                <div class="z-check-item">
+                    <i class="fa-solid fa-circle-check text-primary me-2"></i>
+                    Panel administrativo para dar seguimiento a pedidos, solicitudes y métricas.
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="z-about-system-card rounded-4 p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <div class="small text-primary fw-bold text-uppercase tracking-wider">
+                            Sistema Z-Commerce
+                        </div>
+
+                        <h5 class="text-white fw-black mb-0">
+                            Módulos principales
+                        </h5>
+                    </div>
+
+                    <i class="fa-solid fa-server text-primary fs-2"></i>
+                </div>
+
+                <div class="z-system-row">
+                    <span>
+                        <i class="fa-solid fa-cart-shopping text-primary me-2"></i>
+                        Carrito y checkout
+                    </span>
+                    <strong>Activo</strong>
+                </div>
+
+                <div class="z-system-row">
+                    <span>
+                        <i class="fa-solid fa-user-shield text-primary me-2"></i>
+                        Identity y roles
+                    </span>
+                    <strong>Seguro</strong>
+                </div>
+
+                <div class="z-system-row">
+                    <span>
+                        <i class="fa-solid fa-credit-card text-primary me-2"></i>
+                        Webpay Plus Sandbox
+                    </span>
+                    <strong>Integrado</strong>
+                </div>
+
+                <div class="z-system-row">
+                    <span>
+                        <i class="fa-solid fa-envelope text-primary me-2"></i>
+                        Brevo Email API
+                    </span>
+                    <strong>Operativo</strong>
+                </div>
+
+                <div class="z-system-row">
+                    <span>
+                        <i class="fa-solid fa-chart-line text-primary me-2"></i>
+                        Dashboard admin
+                    </span>
+                    <strong>Online</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="z-about-cta rounded-4 p-4 p-lg-5 text-center text-white shadow-lg">
+    <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-50 px-3 py-2 fw-bold text-uppercase tracking-wider mb-3">
+        ¿Listo para armar tu próximo setup?
+    </span>
+
+    <h2 class="fw-black mb-3">
+        Explora Z-Commerce y encuentra el componente ideal para tu proyecto.
+    </h2>
+
+    <p class="text-light opacity-75 mb-4">
+        Desde componentes para gaming hasta configuraciones para desarrollo, virtualización, servidores SQL o nodos de alto rendimiento.
+    </p>
+
+    <div class="d-flex justify-content-center flex-wrap gap-3">
+        <a asp-controller="Home"
+           asp-action="Catalogo"
+           class="btn btn-primary btn-lg fw-bold px-4 py-3 rounded-3">
+            Ver catálogo
+            <i class="fa-solid fa-layer-group ms-2"></i>
+        </a>
+
+        <a asp-controller="Home"
+           asp-action="Privacy"
+           class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-3">
+            Ver garantía y seguridad
+            <i class="fa-solid fa-shield-halved ms-2"></i>
+        </a>
+    </div>
+</section>
+
+<style>
+    .z-about-hero {
+        background: radial-gradient(circle at top left, rgba(13, 110, 253, 0.32), transparent 32%), radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.16), transparent 36%), linear-gradient(135deg, #0f172a 0%, #020617 100%);
+        border: 1px solid rgba(59, 130, 246, 0.34);
+    }
+
+    .z-about-bg-icon {
+        position: absolute;
+        right: -4%;
+        bottom: -12%;
+        font-size: 20rem;
+        color: rgba(59, 130, 246, 0.08);
+        pointer-events: none;
+    }
+
+    .z-about-terminal {
+        background: rgba(2, 6, 23, 0.82);
+        border: 1px solid rgba(96, 165, 250, 0.28);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    .z-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .z-about-card,
+    .z-value-card,
+    .z-metric-card {
+        background: #ffffff;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+        .z-about-card:hover,
+        .z-value-card:hover,
+        .z-metric-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(59, 130, 246, 0.35);
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12) !important;
+        }
+
+    .z-about-card-icon {
+        width: 58px;
+        height: 58px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: rgba(13, 110, 253, 0.10);
+        color: #0d6efd;
+        font-size: 1.55rem;
+    }
+
+    .z-about-dark {
+        background: radial-gradient(circle at top right, rgba(13, 110, 253, 0.20), transparent 34%), linear-gradient(135deg, #0f172a, #020617);
+        border: 1px solid rgba(59, 130, 246, 0.26);
+    }
+
+    .z-process-box {
+        background: rgba(15, 23, 42, 0.72);
+        border: 1px solid rgba(96, 165, 250, 0.22);
+        transition: all 0.2s ease;
+    }
+
+        .z-process-box:hover {
+            background: rgba(37, 99, 235, 0.12);
+            border-color: rgba(96, 165, 250, 0.48);
+            transform: translateY(-3px);
+        }
+
+    .z-process-number {
+        display: inline-flex;
+        width: 48px;
+        height: 48px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        background: rgba(13, 110, 253, 0.16);
+        border: 1px solid rgba(96, 165, 250, 0.36);
+        color: #60a5fa;
+        font-weight: 900;
+    }
+
+    .z-check-item {
+        color: #cbd5e1;
+        background: rgba(15, 23, 42, 0.62);
+        border: 1px solid rgba(96, 165, 250, 0.18);
+        padding: 0.9rem 1rem;
+        border-radius: 1rem;
+        font-weight: 600;
+    }
+
+    .z-about-system-card {
+        background: rgba(2, 6, 23, 0.72);
+        border: 1px solid rgba(96, 165, 250, 0.26);
+        box-shadow: 0 22px 45px rgba(0, 0, 0, 0.24);
+    }
+
+    .z-system-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.95rem 0;
+        border-top: 1px solid rgba(148, 163, 184, 0.16);
+        color: #cbd5e1;
+        font-size: 0.95rem;
+    }
+
+        .z-system-row strong {
+            color: #38bdf8;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+    .z-about-cta {
+        background: radial-gradient(circle at top, rgba(59, 130, 246, 0.24), transparent 34%), linear-gradient(135deg, #0f172a, #020617);
+        border: 1px solid rgba(59, 130, 246, 0.34);
+    }
+
+    @@media (max-width: 576px) {
+        .z-about-hero .display-5 {
+            font-size: 2rem;
+        }
+
+        .z-about-bg-icon {
+            font-size: 12rem;
+            right: -18%;
+            bottom: -6%;
+        }
+
+        .z-system-row {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+    }
+</style>
